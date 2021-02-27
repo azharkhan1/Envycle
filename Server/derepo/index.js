@@ -45,6 +45,7 @@ var userSchema = new mongoose.Schema({
     role : String,
     points : String,
     gender : String,
+    points : Number,
 });
 
 var userModel = mongoose.model("users", userSchema);

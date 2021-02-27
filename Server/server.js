@@ -60,6 +60,7 @@ app.use(function (req, res, next) {
                 userName: decodedData.userName,
                 userEmail: decodedData.userEmail,
                 role: decodedData.role,
+                points : decodedData.points,
             }, SERVER_SECRET)
             res.cookie('jToken', token, {
                 maxAge: 86_400_000,
@@ -92,7 +93,7 @@ app.get("/profile", (req, res, next) => {
 
 
 app.post("/place-order", (req, res, next) => {
-  
+
     if (!req.body.cart || !req.body.address || !req.body.phoneNo) {
         res.send({
             message: `
@@ -114,10 +115,10 @@ app.post("/place-order", (req, res, next) => {
                 address: req.body.address,
                 phoneNo: req.body.phoneNo,
                 quantity: req.body.quantity,
-                remarks : req.body.remarks,
+                remarks: req.body.remarks,
                 status: 'pending',
-                userEmail : req.body.jToken.userEmail,
-                userName : req.body.jToken.userName
+                userEmail: req.body.jToken.userEmail,
+                userName: req.body.jToken.userName
             }).then((orderPlaced) => {
                 res.status(200).send({
                     message: "Your request has been sent succesfully",
@@ -157,7 +158,7 @@ app.get("/myorders", (req, res, next) => {
 });
 
 app.get("/getOrders", (req, res, next) => {
-    order.find({}, (err, data) => {
+    orderPlaced.find({}, (err, data) => {
         if (!err) {
             res.status(200).send({
                 placedRequests: data,
@@ -170,17 +171,66 @@ app.get("/getOrders", (req, res, next) => {
     })
 });
 
+app.patch('/confirmOrder', (req, res, next) => {
+    var { id } = req.body;
+    userModel.findOne({ userEmail: req.body.jToken.userEmail }, (err, user) => {
+        if (!err) {
+            orderPlaced.findById({ _id: id }, (err, data) => {
+                if (data) {
+                    data.updateOne({ status: 'confirmed' }, {}, (err, updated) => {
+                        if (updated) {
+                             user.update({points:data.quantity} , {} , (err,pointsUpdate)=>{
+                                if (!err)
+                                {
+                                    res.send({
+                                        message : 'points updated succesfully',
+
+                                    })
+                                }
+                                else{
+                                    res.status(501).send({
+                                        message : 'server error'
+                                    })
+                                }
+                             })
+                        }
+                        else {
+                            res.status(501).send({
+                                message: "server error",
+                            })
+                        }
+                    })
+                }
+                else {
+                    res.status(403).send({
+                        message: "Could not find the order"
+                    })
+                }
+            })
+        }
+        else {
+            res.status(501).send({
+                message: "user could not be found",
+            })
+        }
+    })
+})
 
 app.post("/logout", (req, res, next) => {
-    res.cookie('jToken', '' ,{
-        maxAge : 86_400_000,
-        httpOnly : true,
+    res.cookie('jToken', '', {
+        maxAge: 86_400_000,
+        httpOnly: true,
     });
     res.clearCookie();
     res.send({
-        message : 'logout succesfully'
+        message: 'logout succesfully'
     })
-})
+});
+
+
+
+
+
 
 server.listen(PORT, () => {
     console.log("server is running on: ", PORT);

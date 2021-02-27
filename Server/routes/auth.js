@@ -38,6 +38,7 @@ api.post("/signup", (req, res, next) => {
                         userPassword: hashPassword,
                         userName: req.body.userName,
                         gender : req.body.gender,
+                        points : 0,
                         role : 'user',
                     });
 
@@ -98,6 +99,7 @@ api.post("/login", (req, res, next) => {
                             userName: user.userName,
                             userPassword: user.userPassword,
                             role : user.role,
+                            points : user.points,
                         }, SERVER_SECRET)
 
                     res.cookie('jToken', token, {
@@ -111,6 +113,7 @@ api.post("/login", (req, res, next) => {
                             userEmail: user.userEmail,
                             userName: user.userName,
                             role : user.role,
+                            points : user.points,
                         },
                         token: token,
                     })

@@ -11,6 +11,8 @@ import Signup from "../containers/signup"
 import VendorDashboard from "../containers/vendordashboard";
 import UserDashboard from "../containers/userdashboard";
 import MyRequests from "../containers/myrequests";
+import ForgetPassword from '../containers/forget-password';
+
 
 // Improrting Global context
 import { useGlobalState } from '../context/index';
@@ -24,7 +26,6 @@ export default function AppRouter() {
 
   return (
     <HashRouter>
-     
       {(globalState.loginStatus === false) ?
         <>
           <Route exact={true} path="/">
@@ -34,16 +35,17 @@ export default function AppRouter() {
           <Route path="/signup">
             <Signup />
           </Route>
+          <Route path="/forget-password">
+            <ForgetPassword />
+          </Route>
           <Route path="*">
             <Redirect to="/" />
           </Route>
         </>
         : null}
-
       {/* private routes */}
 
       {(globalState.role === "user" && globalState.loginStatus === true) ?
-
         <>
           <Route exact path="/">
             <UserDashboard />
@@ -51,16 +53,18 @@ export default function AppRouter() {
           <Route exact path="/my-requests">
             <MyRequests />
           </Route>
+          <Route exact path="/forget-password">
+            <ForgetPassword />
+          </Route>
+          
           <Route path="*">
             <Redirect to="/" />
           </Route>
         </>
         : null}
-
       {(globalState.role === "admin" && globalState.loginStatus === true) ?
 
         <>
-
           <Route exact path="/">
             <VendorDashboard />
           </Route>

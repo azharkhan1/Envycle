@@ -75,11 +75,12 @@ export default function MyRequests() {
                                                                                                 return <ul key={i}>
                                                                                                     <li>
                                                                                                         <p>{cartVal.product} Price <b>{cartVal.productPrice} x {cartVal.quantity}</b></p>
-                                                                                                        <small style={status==='pending' ? {color:'red'} : {color:'green'}}> <b>status : {status}</b> </small>
                                                                                                     </li>
                                                                                                 </ul>
                                                                                             })
                                                                                         }
+                                                                                                        <small style={status==='pending' ? {color:'red'} : {color:'green'}}> <b>status : {status}</b> </small>
+
                                                                                     </div>
                                                                                 </div>
                                                                             )

@@ -28,7 +28,7 @@ import Logout from '../components/logout';
 
 export default function VendorDashboard() {
 
-    console.log('socket is=>', socket);
+    
     const globalState = useGlobalState();
     const [orders, setOrders] = useState([]);
     const [realTime, setRealTime] = useState(false);
