@@ -37,7 +37,7 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use('/auth', authRoutes);
-app.use("/", express.static(path.resolve(path.join(__dirname, "../../web/build"))));
+app.use("/", express.static(path.resolve(path.join(__dirname, "../web/build"))));
 
 
 app.use(function (req, res, next) {
