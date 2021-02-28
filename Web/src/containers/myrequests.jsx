@@ -53,6 +53,9 @@ export default function MyRequests() {
                             <li className="nav-item active">
                                 <Link to='/my-requests'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
                             </li>
+                            <li className="nav-item active">
+                                <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
+                            </li>
                         </ul>
                         <Logout />
                     </div>
@@ -66,9 +69,9 @@ export default function MyRequests() {
                                                                             return (
                                                                                 <div key={index} className="card text-center" style={{ width: '18rem' }}>
                                                                                     <div className="card-body">
+                                                                                        <h4>Status: <b className={status==='Pending' ? 'text-warning' : status ==='Declined' ? 'text-danger' : 'text-success'}>{status}</b> </h4>
                                                                                         <h4 className="card-title">{phoneNo}</h4>
                                                                                         <h4 className="card-title">{address}</h4>
-                                                                                        <h2>Total is {total}</h2>
                                                                                         {
                                                                                             
                                                                                             cart.map((cartVal, i) => {
@@ -79,7 +82,6 @@ export default function MyRequests() {
                                                                                                 </ul>
                                                                                             })
                                                                                         }
-                                                                                                        <small style={status==='pending' ? {color:'red'} : {color:'green'}}> <b>status : {status}</b> </small>
 
                                                                                     </div>
                                                                                 </div>

@@ -77,10 +77,19 @@ var collection = mongoose.Schema({
 
 var orderPlaced = mongoose.model("requests",collection);
 
+var restaurant = mongoose.Schema({
+    name : String,
+    location : String,
+    passcode : String,
+    discount : Number,
+    points : Number,
+})
 
+var restaurantModel = mongoose.model("Restaurants",restaurant);
 
 module.exports = {
     userModel: userModel,
     otpModel: otpModel,
     orderPlaced : orderPlaced,
+    restaurantModel : restaurantModel,
 }

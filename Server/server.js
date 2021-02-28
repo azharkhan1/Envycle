@@ -16,7 +16,7 @@ var http = require("http");
 var { SERVER_SECRET, PORT } = require("./core");
 
 var socketIo = require("socket.io");
-var { userModel, orderPlaced } = require("./derepo");
+var { userModel, orderPlaced, restaurantModel } = require("./derepo");
 
 
 
@@ -60,7 +60,7 @@ app.use(function (req, res, next) {
                 userName: decodedData.userName,
                 userEmail: decodedData.userEmail,
                 role: decodedData.role,
-                points : decodedData.points,
+                points: decodedData.points,
             }, SERVER_SECRET)
             res.cookie('jToken', token, {
                 maxAge: 86_400_000,
@@ -77,7 +77,7 @@ app.use(function (req, res, next) {
 })
 
 app.get("/profile", (req, res, next) => {
-    userModel.findById(req.body.jToken.id, "userName userEmail role ",
+    userModel.findById(req.body.jToken.id, "userName userEmail role points",
         function (err, doc) {
             if (!err) {
                 res.send({
@@ -116,7 +116,7 @@ app.post("/place-order", (req, res, next) => {
                 phoneNo: req.body.phoneNo,
                 quantity: req.body.quantity,
                 remarks: req.body.remarks,
-                status: 'pending',
+                status: 'Pending',
                 userEmail: req.body.jToken.userEmail,
                 userName: req.body.jToken.userName
             }).then((orderPlaced) => {
@@ -173,26 +173,27 @@ app.get("/getOrders", (req, res, next) => {
 
 app.patch('/confirmOrder', (req, res, next) => {
     var { id } = req.body;
-    userModel.findOne({ userEmail: req.body.jToken.userEmail }, (err, user) => {
+    console.log(' the request is = > ', req.body);
+    userModel.findOne({ userEmail: req.body.userEmail }, (err, user) => {
         if (!err) {
             orderPlaced.findById({ _id: id }, (err, data) => {
                 if (data) {
-                    data.updateOne({ status: 'confirmed' }, {}, (err, updated) => {
+                    data.updateOne({ status: 'Confirmed' }, {}, (err, updated) => {
                         if (updated) {
-                             user.update({points:data.quantity} , {} , (err,pointsUpdate)=>{
-                                if (!err)
-                                {
+                            console.log('updated user is=>', updated);
+                            user.updateOne({ points: user.points + data.quantity }, {}, (err, pointsUpdate) => {
+                                if (!err) {
                                     res.send({
-                                        message : 'points updated succesfully',
+                                        message: 'points updated succesfully',
 
                                     })
                                 }
-                                else{
+                                else {
                                     res.status(501).send({
-                                        message : 'server error'
+                                        message: 'server error'
                                     })
                                 }
-                             })
+                            })
                         }
                         else {
                             res.status(501).send({
@@ -216,6 +217,98 @@ app.patch('/confirmOrder', (req, res, next) => {
     })
 })
 
+app.patch('/declineOrder', (req, res, next) => {
+    var { id } = req.body;
+    userModel.findOne({ userEmail: req.body.jToken.userEmail }, (err, user) => {
+        if (!err) {
+            orderPlaced.findById({ _id: id }, (err, data) => {
+                if (data) {
+                    data.updateOne({ status: 'Declined' }, {}, (err, updated) => {
+                        if (updated) {
+                            res.send({
+                                message: 'order has been declined',
+                            })
+                        }
+                        else {
+                            res.status(501).send({
+                                message: "server error",
+                            })
+                        }
+                    })
+                }
+                else {
+                    res.status(403).send({
+                        message: "Could not find the order"
+                    })
+                }
+            })
+        }
+        else {
+            res.status(501).send({
+                message: "user could not be found",
+            })
+        }
+    })
+})
+
+app.post('/add-restaurant', (req, res, next) => {
+
+    console.log('req body is ', req.body);
+    if (!req.body.name || !req.body.points || !req.body.location || !req.body.passcode || !req.body.discount) {
+        res.status(403).send({
+            message: `
+            Please send following in json body,
+            e.g:
+            {
+            "name" : "restaurant name",
+            "location" : "xyz location",
+            "passcode" : "xxxxx",
+            "discount" : 10,
+            "points" : 40
+            }
+            `
+        });
+    };
+
+    if (req.body.jToken.role === 'admin') {
+        restaurantModel.create({
+            name: req.body.name,
+            location: req.body.location,
+            passcode: req.body.passcode,
+            discount: req.body.discount,
+            points: req.body.points,
+        }).then((added) => {
+            res.status(200).send({
+                message: 'succesfully added'
+            })
+        }).catch((err) => {
+            res.send({
+                message: 'an error occured',
+            })
+        })
+    }
+    else {
+        res.status(403).send({
+            message: 'Only admin can add the restaurants',
+        })
+    }
+})
+
+app.get('/get-restaurants', (req, res, next) => {
+    restaurantModel.find({}, (err, data) => {
+        if (!err) {
+            res.status(200).send({
+                restaurants: data,
+            })
+        }
+        else {
+            res.status(501).send({
+                message: 'server error',
+            });
+        }
+    })
+})
+
 app.post("/logout", (req, res, next) => {
     res.cookie('jToken', '', {
         maxAge: 86_400_000,
@@ -226,9 +319,6 @@ app.post("/logout", (req, res, next) => {
         message: 'logout succesfully'
     })
 });
-
-
-
 
 
 

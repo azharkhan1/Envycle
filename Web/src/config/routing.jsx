@@ -12,7 +12,8 @@ import VendorDashboard from "../containers/vendordashboard";
 import UserDashboard from "../containers/userdashboard";
 import MyRequests from "../containers/myrequests";
 import ForgetPassword from '../containers/forget-password';
-
+import RedeemVoucher from '../containers/redeem-voucher';
+import AddRestaurant from '../containers/vendor-restaurants';
 
 // Improrting Global context
 import { useGlobalState } from '../context/index';
@@ -53,10 +54,9 @@ export default function AppRouter() {
           <Route exact path="/my-requests">
             <MyRequests />
           </Route>
-          <Route exact path="/forget-password">
-            <ForgetPassword />
+          <Route exact path="/redeem-voucher">
+            <RedeemVoucher />
           </Route>
-          
           <Route path="*">
             <Redirect to="/" />
           </Route>
@@ -67,6 +67,9 @@ export default function AppRouter() {
         <>
           <Route exact path="/">
             <VendorDashboard />
+          </Route>
+          <Route  path="/add-restaurant">
+            <AddRestaurant />
           </Route>
           <Route path="*">
             <Redirect to="/" />

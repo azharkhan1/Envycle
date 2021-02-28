@@ -172,7 +172,11 @@ export default function UserDashboard() {
                             <li className="nav-item active">
                                 <Link to='/my-requests'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
                             </li>
+                            <li className="nav-item active">
+                                <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
+                            </li>
                         </ul>
+                        
                         <Logout />
                     </div>
                 </nav>

@@ -43,6 +43,7 @@ function Signin() {
                 ...prev, loginStatus: true, user: {
                     userEmail: response.data.user.userEmail,
                     userName: response.data.user.userName,
+                    points : response.data.user.points,
                 }, role: response.data.user.role,
             }));
         }, (error) => {

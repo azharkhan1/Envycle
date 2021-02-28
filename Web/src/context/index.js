@@ -33,7 +33,6 @@ export function GlobalStateProvider({ children }) {
                 setData(prev => ({ ...prev, loginStatus: true , user : response.data.profile , role : response.data.profile.role }));
         }, (error) => {
             setData(prev => ({ ...prev, loginStatus: false }))
-            console.log("error ==============> ", error.response.status );
         });
     } , [] );
   
