@@ -87,9 +87,17 @@ var restaurant = mongoose.Schema({
 
 var restaurantModel = mongoose.model("Restaurants",restaurant);
 
+var material = mongoose.Schema({
+    name : String,
+    url : String,
+})
+
+var materialModel = mongoose.model('Materials' , material);
+
 module.exports = {
     userModel: userModel,
     otpModel: otpModel,
     orderPlaced : orderPlaced,
     restaurantModel : restaurantModel,
+    materialModel : materialModel,
 }

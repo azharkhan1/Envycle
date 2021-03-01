@@ -16,7 +16,7 @@ var http = require("http");
 var { SERVER_SECRET, PORT } = require("./core");
 
 var socketIo = require("socket.io");
-var { userModel, orderPlaced, restaurantModel } = require("./derepo");
+var { userModel, orderPlaced, restaurantModel , materialModel } = require("./derepo");
 
 
 
@@ -292,7 +292,45 @@ app.post('/add-restaurant', (req, res, next) => {
             message: 'Only admin can add the restaurants',
         })
     }
-})
+});
+
+app.post('/add-materials', (req, res, next) => {
+    console.log('materials console' , req.body);
+    console.log('req body is ', req.body);
+    if (!req.body.name || !req.body.url ) {
+        res.status(403).send({
+            message: `
+            Please send following in json body,
+            e.g:
+            {
+            "name" : "material name",
+            "url" : "image url"
+            }
+            `
+        });
+    };
+
+    if (req.body.jToken.role === 'admin') {
+        materialModel.create({
+            name: req.body.name,
+            url: req.body.url,
+        }).then((added) => {
+            res.status(200).send({
+                message: 'succesfully added'
+            })
+        }).catch((err) => {
+            res.send({
+                message: 'an error occured',
+            })
+        })
+    }
+    else {
+        res.status(403).send({
+            message: 'Only admin can add the restaurants',
+        })
+    }
+});
+
 
 app.get('/get-restaurants', (req, res, next) => {
     restaurantModel.find({}, (err, data) => {

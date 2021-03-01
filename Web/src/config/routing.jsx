@@ -17,6 +17,7 @@ import AddRestaurant from '../containers/vendor-restaurants';
 
 // Improrting Global context
 import { useGlobalState } from '../context/index';
+import AddProduct from "../containers/add-product";
 
 
 
@@ -70,6 +71,9 @@ export default function AppRouter() {
           </Route>
           <Route  path="/add-restaurant">
             <AddRestaurant />
+          </Route>
+          <Route  path="/add-product">
+            <AddProduct />
           </Route>
           <Route path="*">
             <Redirect to="/" />

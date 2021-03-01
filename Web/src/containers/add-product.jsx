@@ -26,28 +26,29 @@ import url from "../core";
 // import components
 import Logout from '../components/logout';
 
-export default function AddRestaurant() {
+export default function AddProduct() {
 
     const globalState = useGlobalState();
 
-    const AddRestaurant = (e) => {
+    const addProduct = (e) => {
+        console.log('url is=>',url);
         e.preventDefault();
         axios({
             method: 'post',
-            url: url + "/add-restaurant",
+            url: `${url}/add-materials` ,
             data: {
                 name: document.getElementById('name').value,
-                location: document.getElementById('location').value,
-                passcode: document.getElementById('passcode').value,
-                discount: document.getElementById('discount').value,
-                points: document.getElementById('points').value,
+                url: document.getElementById('imageurl').value,
             },
         }).then((response) => {
             console.log("response", response);
             alert('added succesfully');
+            document.getElementById('imageurl').value = '';
+            document.getElementById('name').value = '';
+
         }, (error) => {
             alert(error);
-            console.log('error is=>', error);
+            console.log('error is=>',error);
 
         })
     }
@@ -91,7 +92,7 @@ export default function AddRestaurant() {
                                                     </div>
                                                 </div>
                                                 <div className="user-specs">
-                                                    <h3>Add Restaurant</h3>
+                                                    <h3>Add New Materials</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -99,34 +100,18 @@ export default function AddRestaurant() {
                                 </div>
                                 <div className="col-lg-6 col-md-8 no-pd">
                                     <div className="main-ws-sec">
-                                        <form onSubmit={AddRestaurant}>
+                                        <form onSubmit={addProduct}>
                                             <div className="form-row align-items-center">
                                                 <div className="col-md-5">
-                                                    <input type="text" className="form-control mb-2" id="name" placeholder="Restaurant Name" />
+                                                    <input type="text" className="form-control mb-2" id="name" placeholder="Material Name" />
                                                 </div>
                                                 <div className="col-md-5">
                                                     <div className="input-group mb-2">
-                                                        <input type="text" className="form-control" id="location" placeholder="Location" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-5">
-
-                                                    <div className="input-group mb-2">
-                                                        <input type="type" className="form-control" id="passcode" placeholder="Voucher passcode" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-5">
-                                                    <div className="input-group mb-2">
-                                                        <input type="text" className="form-control" id="discount" placeholder="Discount to be given" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-5">
-                                                    <div className="input-group mb-2">
-                                                        <input type="text" className="form-control" id="points" placeholder="Voucher points" />
+                                                        <input type="text" className="form-control" id="imageurl" placeholder="Image url" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-12 mx-auto ">
-                                                    <button type="submit" className="btn btn-primary mb-2">Add Restaurant</button>
+                                                    <button type="submit" className="btn btn-primary mb-2">Add Material</button>
                                                 </div>
                                             </div>
                                         </form>

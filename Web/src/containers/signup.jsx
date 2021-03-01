@@ -19,7 +19,6 @@ export default function Signup() {
 
     function signUp(e) {
         e.preventDefault();
-
         var firstName = document.getElementById('firstName').value
         var lastName = document.getElementById('lastName').value
         firstName = firstName.charAt(0) + firstName.slice(1)

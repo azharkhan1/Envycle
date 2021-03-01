@@ -102,12 +102,15 @@ export default function VendorDashboard() {
                             <li className="nav-item active">
                                 <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
                             </li>
-                            <li className="nav-item active">
+                            <li className="nav-item ">
                                 <Link to='/checkorders'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
                             </li>
-                            
+
                             <li className="nav-item active">
                                 <Link to='/add-restaurant'><a className="nav-link" >Add Restaurant<span className="sr-only"></span></a></Link>
+                            </li>
+                            <li className="nav-item active">
+                                <Link to='/add-product'><a className="nav-link" >Add Product<span className="sr-only"></span></a></Link>
                             </li>
                         </ul>
                         <Logout />
