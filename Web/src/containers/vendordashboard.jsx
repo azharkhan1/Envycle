@@ -49,7 +49,6 @@ export default function VendorDashboard() {
         }, (error) => {
             console.log("an error occured");
         })
-
         socket.on('requests', (data) => {
             setRealTime(!realTime);
         })
@@ -156,7 +155,7 @@ export default function VendorDashboard() {
                                                                         cart.map((cartVal, i) => {
                                                                             return <ul key={i}>
                                                                                 <li>
-                                                                                    <p>{cartVal.product} Price <b>{cartVal.productPrice} x {cartVal.quantity}</b></p>
+                                                                                    <p>{cartVal.product} <b> qty : {cartVal.quantity}</b></p>
                                                                                 </li>
                                                                             </ul>
                                                                         })

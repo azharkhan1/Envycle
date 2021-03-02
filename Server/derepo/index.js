@@ -1,16 +1,15 @@
 
 var {DBURI} = require("../core");
 
-
+console.log('db uri is=>',DBURI);
 
 var mongoose = require("mongoose");
 
 
 
-let dbURI = DBURI 
 
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(DBURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 ////////////////mongodb connected disconnected events///////////////////////////////////////////////
 

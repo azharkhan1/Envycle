@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useGlobalState } from '../context'
+import { useGlobalState, useGlobalStateUpdate } from '../context'
 import axios from 'axios'
 import url from '../core/index';
 
@@ -23,7 +23,9 @@ import Logout from '../components/logout';
 
 export default function MyRequests() {
     const [restaurants, setRestaurants] = React.useState([]);
+    const [message, setMessage] = React.useState();
     const globalState = useGlobalState();
+    const setGlobalState = useGlobalStateUpdate();
 
     useEffect(() => {
         axios({
@@ -35,16 +37,36 @@ export default function MyRequests() {
         }).catch((err) => {
             alert('server error please refresh page or check internet');
         })
+    }, [message])
 
-    }, [])
-
-
+    const redeem = (id, index) => {
+        axios({
+            method: 'post',
+            url: `${url}/redeem-voucher`,
+            data: {
+                id: id,
+                passcode: document.getElementById('passcode').value,
+            }
+        }).then((response) => {
+            console.log('response is=> ', response.data);
+            setGlobalState(prev => ({
+                ...prev, loginStatus: true, user: {
+                    ...globalState.user,
+                    points: restaurants[index].points - globalState.user.points  ,
+                }, role: response.data.user.role,
+            }));
+            setMessage('done')
+        }).catch((err) => {
+            setMessage('done')
+            console.log('response is=> ', err.response);
+        })
+    }
 
     return (
         <div>
             <div className="wrapper">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <a className="navbar-brand" href="#">{globalState.user.userName}</a>
+                    <a className="navbar-brand" href="#">{JSON.stringify(globalState)}</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
                     </button>
@@ -66,14 +88,15 @@ export default function MyRequests() {
                 </nav>
                 <main>
                     {
-                        restaurants.map(({name,location,passcode,discount,points},index) => {
+                        restaurants.map(({ name, location, passcode, discount, points, _id }, index) => {
                             return <div key={index} className="card mx-auto" style={{ width: '18rem' }}>
                                 <div className="card-body text-center">
                                     <h5 className="card-title">{name}</h5>
                                     <p className="card-text">{location}</p>
-                                    <p>Points to avail this voucher: {points}</p>
-                                    <small className="card-text">{parseInt(globalState.user.points) >= points ? `DISCLAIMER : To avail the voucher visit ${name} they will enter passcode for discount` : `Need ${points} points for discount`}</small>
-                                    <button className="btn btn-primary">{parseInt(globalState.user.points) >= points ? `Reddem ${name} Voucher` : `Need ${points} Point to Redeem`}</button>
+                                    <small className="card-text">{parseInt(globalState.user.points) >= points ? `DISCLAIMER : To avail the voucher visit ${name} they will enter passcode for discount` : `Points required ${points}`}</small>
+                                    {globalState.user.points >= points ? <br /> : null}
+                                    {globalState.user.points >= points ? <input id="passcode" placeholder='Restaurant passcode' /> : null}
+                                    <button onClick={globalState.user.points >= points ? () => redeem(_id, index) : () => { return }} className="btn btn-primary">{parseInt(globalState.user.points) >= points ? `Reddem ${name} Voucher` : `Need ${points - globalState.user.points} Point to Redeem`}</button>
                                 </div>
                             </div>
 

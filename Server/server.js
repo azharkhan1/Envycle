@@ -16,7 +16,7 @@ var http = require("http");
 var { SERVER_SECRET, PORT } = require("./core");
 
 var socketIo = require("socket.io");
-var { userModel, orderPlaced, restaurantModel , materialModel } = require("./derepo");
+var { userModel, orderPlaced, restaurantModel, materialModel } = require("./derepo");
 
 
 
@@ -91,6 +91,7 @@ app.get("/profile", (req, res, next) => {
         })
 });
 
+// User api's
 
 app.post("/place-order", (req, res, next) => {
 
@@ -170,6 +171,84 @@ app.get("/getOrders", (req, res, next) => {
         }
     })
 });
+
+app.get("/get-materials", (req, res, next) => {
+    materialModel.find({}, (err, data) => {
+        if (!err) {
+            res.status(200).send({
+                materials: data,
+            });
+        }
+        else {
+            console.log("error : ", err);
+            res.status(500).send("error");
+        }
+    })
+});
+
+app.post('/redeem-voucher', (req, res, next) => {
+    if (!req.body.id || !req.body.passcode) {
+        res.status(404).send({
+            message: `
+            Please send following in json body to avail the voucher
+            e.g
+            {
+                id : restaurant_id,
+                passcode : restaurant_passcode xxx
+            }
+            `
+        })
+        return;
+    }
+
+    userModel.findOne({ userEmail: req.body.jToken.userEmail }, {}, (err, user) => {
+        if (!err) {
+            restaurantModel.findById(req.body.id, {}, (err, voucher) => {
+                if (!err) {
+                    if (voucher.passcode === req.body.passcode) {
+                        if (voucher.points >= user.points) {
+                            user.updateOne({ points: user.points - voucher.points }, (err, redeemed) => {
+                                if (!err) {
+                                    res.status(200).send({
+                                        message: 'Voucher redeemed succesfully',
+                                        user: user,
+                                    })
+                                }
+                                else {
+                                    res.status(403).send({
+                                        message: 'server error'
+                                    })
+                                }
+                            })
+                        }
+                        else{
+                            res.status(407).send({
+                                message : 'not enough points'
+                            })
+                        }
+                    }
+                    else {
+                        res.status(403).send({
+                            message: 'restaurant passcode did not match'
+                        })
+                    }
+                }
+                else {
+                    res.status(404).send({
+                        message: 'server error'
+                    })
+                }
+            })
+        }
+        else {
+            res.status(500).send({
+                message: 'server error please try again later'
+            })
+        }
+    })
+})
+
+// Admin api's
 
 app.patch('/confirmOrder', (req, res, next) => {
     var { id } = req.body;
@@ -295,9 +374,9 @@ app.post('/add-restaurant', (req, res, next) => {
 });
 
 app.post('/add-materials', (req, res, next) => {
-    console.log('materials console' , req.body);
+    console.log('materials console', req.body);
     console.log('req body is ', req.body);
-    if (!req.body.name || !req.body.url ) {
+    if (!req.body.name || !req.body.url) {
         res.status(403).send({
             message: `
             Please send following in json body,
