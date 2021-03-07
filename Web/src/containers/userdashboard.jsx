@@ -44,7 +44,7 @@ export default function UserDashboard() {
     var address = useRef();
     var phoneNo = useRef();
     var remarks = useRef();
-    var [products , setProducts ] = useState([]);
+    var [products, setProducts] = useState([]);
     // var [products, setProducts] = useState([
     //     {
     //         product: 'Cardboard',
@@ -66,19 +66,19 @@ export default function UserDashboard() {
 
     // ])
 
-    useEffect(()=>{
+    useEffect(() => {
 
         axios({
-            method : 'get',
-            url : `${url}/get-materials`
-        }).then((res)=>{
-            console.log('',res.data.materials);
+            method: 'get',
+            url: `${url}/get-materials`
+        }).then((res) => {
+            console.log('', res.data.materials);
             setProducts(res.data.materials);
-        }).catch((err)=>{
+        }).catch((err) => {
 
         })
 
-    },[])
+    }, [])
 
 
     function addCart(value, index) {
@@ -101,12 +101,14 @@ export default function UserDashboard() {
     }
 
     function removeQty(index) {
+       
         if (cart[index].quantity > 5) {
             var prevCart = [...cart];
             prevCart[index].quantity -= 5;
             setCart(prevCart);
         }
         else {
+           
             for (let i = 0; i < products.length; i++) {
                 if (cart[index].product === products[i].product) {
                     var products_change = [...products];
@@ -114,13 +116,13 @@ export default function UserDashboard() {
                     setProducts(products_change);
                 }
             }
+           
             let old_cart = [...cart]
             old_cart.splice(index, 1);
-            setProducts(products_change);
             setCart(old_cart);
         }
-
     }
+
     function checkOut(e) {
         e.preventDefault();
 
@@ -129,15 +131,14 @@ export default function UserDashboard() {
             totalQuantity += value.quantity;
         }))
 
-        if (totalQuantity<20)
-        {
+        if (totalQuantity < 20) {
             setMessage('Include 20KG atleast');
-            document.getElementById('order-message').style.color='red';
+            document.getElementById('order-message').style.color = 'red';
             return
         }
 
-        console.log('phone number',phoneNo.current.value)
-        console.log('remarks',remarks.current.value)
+        console.log('phone number', phoneNo.current.value)
+        console.log('remarks', remarks.current.value)
 
         axios({
             method: 'post',
@@ -146,14 +147,14 @@ export default function UserDashboard() {
                 cart: cart,
                 address: address.current.value,
                 phoneNo: phoneNo.current.value,
-                quantity : totalQuantity,
+                quantity: totalQuantity,
                 remarks: remarks.current.value,
             },
 
         }).then((response) => {
             console.log("response is = > ", response.data);
             setMessage("Your order has been placed");
-            document.getElementById('order-message').style.color='black';
+            document.getElementById('order-message').style.color = 'black';
 
             cart.map((value) => {
                 value.quantity = 0
@@ -188,7 +189,7 @@ export default function UserDashboard() {
                                 <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
                             </li>
                         </ul>
-                        
+
                         <Logout />
                     </div>
                 </nav>
@@ -200,20 +201,19 @@ export default function UserDashboard() {
                                     <div className="col-lg-8 col-md-8 no-pd col-sm-12 col-xs-12">
                                         <div className="main-ws-sec">
                                             <div className="posts-section">
-                                                
+
                                                 <div className="row">
                                                     {
                                                         products.map((value, index) => {
-
                                                             return <div key={index} className="card mr-2 mt-2 mx-auto text-center" style={{ width: "15rem" }} >
-                                                                <img  src={value.url} className="material" alt="..." />
+                                                                <img src={value.url} className="material" alt="..." />
                                                                 <div className="card-body">
                                                                     <div className="gradient-img">
                                                                     </div>
-                                                                    <h4 className='product-name' style={{backgroundColor:"black", color:"white" }}>{value.name}</h4>
-                                                                  
+                                                                    <h4 className='product-name' style={{ backgroundColor: "black", color: "white" }}>{value.name}</h4>
+
                                                                 </div>
-                            
+
                                                                 <button onClick={value.added ? () => { return } : (e) => addCart(value, index)} className="cart-btn">{value.added ? "Added" : "Add Item"}</button>
 
                                                             </div>
@@ -233,7 +233,7 @@ export default function UserDashboard() {
                                                         {
 
                                                             cart.map((value, index) => {
-                                                                return <div class="card-body">
+                                                                return <div class="card-body" key={index}>
                                                                     <h5 class="card-title">{value.product} (kg)</h5>
 
                                                                     <div className="quantity buttons_added">
