@@ -11,6 +11,7 @@ import './css/line-awesome-font-awesome.min.css'
 import './css/jquery.mCustomScrollbar.min.css'
 import './css/flatpickr.min.css'
 import "./css/dashboard.css";
+import "./css/userdashboard.css";
 
 
 // import global state
@@ -204,18 +205,15 @@ export default function UserDashboard() {
                                                     {
                                                         products.map((value, index) => {
 
-                                                            return <div key={index} className="card mr-2 mt-2 mx-auto" style={{ width: "15rem" }} >
-                                                                <img style={{ height: "170px" }} src={value.url} className="card-img-top" alt="..." />
+                                                            return <div key={index} className="card mr-2 mt-2 mx-auto text-center" style={{ width: "15rem" }} >
+                                                                <img  src={value.url} className="material" alt="..." />
                                                                 <div className="card-body">
                                                                     <div className="gradient-img">
                                                                     </div>
-                                                                    <h2>{value.name}</h2>
+                                                                    <h4 className='product-name' style={{backgroundColor:"black", color:"white" }}>{value.name}</h4>
                                                                   
                                                                 </div>
-                                                                <ul className="list-group list-group-flush">
-                                                                    <li className="list-group-item">
-                                                                    </li>
-                                                                </ul>
+                            
                                                                 <button onClick={value.added ? () => { return } : (e) => addCart(value, index)} className="cart-btn">{value.added ? "Added" : "Add Item"}</button>
 
                                                             </div>
