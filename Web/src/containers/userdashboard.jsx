@@ -40,6 +40,7 @@ export default function UserDashboard() {
     const globalState = useGlobalState();
 
     var [cart, setCart] = useState([]);
+    var [change , setChange] = useState(true);
     var [orderMessage, setMessage] = useState("Cart");
     var address = useRef();
     var phoneNo = useRef();
@@ -78,7 +79,7 @@ export default function UserDashboard() {
 
         })
 
-    }, [])
+    }, [change])
 
 
     function addCart(value, index) {
@@ -101,22 +102,20 @@ export default function UserDashboard() {
     }
 
     function removeQty(index) {
-       
+
         if (cart[index].quantity > 5) {
             var prevCart = [...cart];
             prevCart[index].quantity -= 5;
             setCart(prevCart);
         }
         else {
-           
-            for (let i = 0; i < products.length; i++) {
-                if (cart[index].product === products[i].product) {
-                    var products_change = [...products];
-                    products_change[i].added = false;
-                    setProducts(products_change);
-                }
-            }
-           
+
+
+
+            var products_change = [...products];
+            products_change[index].added = false;
+            setProducts(products_change);
+            setChange(!change);
             let old_cart = [...cart]
             old_cart.splice(index, 1);
             setCart(old_cart);
