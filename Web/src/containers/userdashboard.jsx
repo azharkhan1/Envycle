@@ -109,9 +109,6 @@ export default function UserDashboard() {
             setCart(prevCart);
         }
         else {
-
-
-
             var products_change = [...products];
             products_change[index].added = false;
             setProducts(products_change);

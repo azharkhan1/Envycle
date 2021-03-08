@@ -144,24 +144,44 @@ export default function VendorDashboard() {
                                                 {
                                                     orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks }, index) => {
                                                         return (
-                                                            <div key={index} className="card text-center" style={{ width: '18rem' }}>
+                                                            <div key={index} className="card" style={{ width: 'rem' , margin:'0 auto' }}>
                                                                 <div className="card-body">
-                                                                    <h5 className="card-title">{userEmail}</h5>
-                                                                    <h6 className="card-title">{phoneNo}</h6>
-                                                                    <h6>{address}</h6>
+                                                                    <div>
+                                                                    <span>Email : </span>
+                                                                    <span className='float-right'>{userEmail}</span>
+                                                                        </div>
+                                                                        <hr/>
+                                                                    <div className='mt-3 mb-1'>
+                                                                    <span >Phone : </span>
+                                                                    <span className='float-right'>{phoneNo}</span>
+                                                                        </div>
+                                                                        <hr/>
+                                                                        <div className='mt-3'>
+                                                                    <span>Address : </span>
+                                                                    <span className='float-right'>{address}</span>
+                                                                        </div>
+                                                                        <hr/>
 
-                                                                    {remarks ? <small>Remarks: {remarks}</small> : ''}
                                                                     {
                                                                         cart.map((cartVal, i) => {
                                                                             return <ul key={i}>
                                                                                 <li>
-                                                                                    <p>{cartVal.product} <b> qty : {cartVal.quantity}</b></p>
+                                                                                <div className='mt-2'>
+                                                                    <span className="card-title">Product : </span>
+                                                                    <span className='float-right'>{cartVal.product}  {cartVal.quantity} kg</span>
+                                                                        </div>
                                                                                 </li>
                                                                             </ul>
                                                                         })
+                                                                        
                                                                     }
-                                                                    <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3">Accept Order</button>
-                                                                    <button onClick={() => declineOrder(index)} className="btn btn-danger ">Decline Order</button>
+                                                                    {remarks ? <div  className='text-center'><small>Remarks: {remarks}</small></div> : ''}
+                                                                    <div className='text-center mt-4'> 
+                                                                    <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3  text-center">Accept Order</button>
+                                                                <button onClick={() => declineOrder(index)} className="btn btn-danger ml-3 text-center">Decline Order</button>
+
+                                                                    </div>
+                                                                
                                                                 </div>
                                                             </div>
                                                         )
