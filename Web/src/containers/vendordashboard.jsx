@@ -39,7 +39,6 @@ export default function VendorDashboard() {
             method: 'get',
             url: `${url}/getOrders`,
         }).then((response) => {
-
             response.data.placedRequests.map((value) => {
                 if (value.status === 'Pending') {
                     arr.push(value);

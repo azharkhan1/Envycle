@@ -158,6 +158,33 @@ app.get("/myorders", (req, res, next) => {
     })
 });
 
+app.delete('/delete-order' ,(req , res)=>{
+    if (!req.body.id)
+    {
+        res.send({
+            message : `
+            Please send order id in the json body 
+            e.g:
+            "id" : '12309230fvkid'
+            `
+        });
+    }
+
+    orderPlaced.findById(req.body.id , {} , (err,data)=>{
+        if (!err){
+            data.remove()
+            res.status(200).send({
+                message : 'Request canceled succesfully'
+            })
+        }
+        else{
+                res.status(500).send({
+                    message : 'server error'
+                })
+        }
+    })
+})
+
 app.get("/getOrders", (req, res, next) => {
     orderPlaced.find({}, (err, data) => {
         if (!err) {

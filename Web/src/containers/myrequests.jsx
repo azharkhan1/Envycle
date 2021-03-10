@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {useGlobalState} from  '../context'
+import { useGlobalState } from '../context'
 import axios from 'axios'
 import url from '../core/index';
 
@@ -21,9 +21,10 @@ import {
 
 import Logout from '../components/logout';
 
-export default function MyRequests() {  
+export default function MyRequests() {
     const globalState = useGlobalState();
     const [orders, setOrders] = React.useState([]);
+    const [change , handleChange] = React.useState(true);
     useEffect(() => {
         axios({
             method: 'get',
@@ -34,8 +35,22 @@ export default function MyRequests() {
         }, (error) => {
             console.log("an error occured");
         })
-    }, [])
+    }, [change])
 
+    const deleteOrder = (id)=>{
+        axios({
+            method:'delete',
+            url : `${url}/delete-order`,
+            data : {
+                id : id,
+            },
+        }).then((response)=>{
+            alert(response.data.message);
+            handleChange(!change);
+        }).catch((error)=>{
+            alert('server error');
+        })
+    }
 
     return (
         <div>
@@ -61,37 +76,52 @@ export default function MyRequests() {
                     </div>
                 </nav>
                 <main>
-                <div className="card text-center mx-auto" style={{ width: '28rem' }}>
-                                                            <div className="card-body mx-auto">
-                                                              <div>
-                                                                    {
-                                                                        orders.reverse().map(({ cart, total, phoneNo, address, status }, index) => {
-                                                                            return (
-                                                                                <div key={index} className="card text-center" style={{ width: '18rem' }}>
-                                                                                    <div className="card-body">
-                                                                                        <h4>Status: <b className={status==='Pending' ? 'text-warning' : status ==='Declined' ? 'text-danger' : 'text-success'}>{status}</b> </h4>
-                                                                                        <h4 className="card-title">{phoneNo}</h4>
-                                                                                        <h4 className="card-title">{address}</h4>
-                                                                                        {
-                                                                                            
-                                                                                            cart.map((cartVal, i) => {
-                                                                                                return <ul key={i}>
-                                                                                                    <li>
-                                                                                                        <p>{cartVal.product} <b> x {cartVal.quantity} KG</b></p>
-                                                                                                    </li>
-                                                                                                </ul>
-                                                                                            })
-                                                                                        }
+                    <div className="card text-center mx-auto" style={{ width: '28rem' }}>
+                        <div className="card-body mx-auto">
+                            <div>
+                                {
+                                    orders.reverse().map(({ cart, total, phoneNo, address, status , _id}, index) => {
+                                        return (
+                                            <div key={index} className="card-body mb-4" style={{ boxShadow: "0 0 6px grey" }}>
+                                                <div className='mt-2 px-2 py-2'>
+                                                    <span className='float-left'>Status:</span> <span className={status === 'Pending' ? 'text-warning float-right' : status === 'Declined' ? 'text-danger float-right' : 'text-success float-right'}>{status}</span>
+                                                </div>
+                                                <hr />
+                                                <div className='mt-2  px-2 py-2'>
+                                                    <span className="float-left">Phone: </span> <span className="float-right">{phoneNo}</span>
+                                                </div>
+                                                <hr />
+                                                <div className='mb-2  px-2 py-2'>
+                                                    <span className="float-left">Address: </span> <span className="float-right">{address}</span>
+                                                </div>
+                                                <hr />
 
-                                                                                    </div>
-                                                                                </div>
-                                                                            )
-                                                                        })
-                                                                    }
-            
-                                                                </div>
-                                                            </div>
+                                                {
+
+                                                    cart.map((cartVal, i) => {
+                                                        return <ul key={i}>
+                                                            <li>
+                                                                <p>{cartVal.product} <b> x {cartVal.quantity} KG</b></p>
+                                                            </li>
+                                                        </ul>
+                                                    })
+                                                }
+                                                {
+                                                    status === 'Pending' ?
+                                                        <div className='text-center'>
+                                                            <button onClick={()=> deleteOrder(_id)}className="btn btn-danger mb-2 w-100">Cancel Request</button>
                                                         </div>
+                                                        : ''
+                                                }
+                                            </div>
+
+                                        )
+                                    })
+                                }
+
+                            </div>
+                        </div>
+                    </div>
                 </main>
             </div>
         </div>
