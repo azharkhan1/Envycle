@@ -101,7 +101,7 @@ export default function MyRequests() {
                                                     cart.map((cartVal, i) => {
                                                         return <ul key={i}>
                                                             <li>
-                                                                <p>{cartVal.product} <b> x {cartVal.quantity} KG</b></p>
+                                                                <p>{cartVal.product ? cartVal.product : cartVal.name} <b> x {cartVal.quantity} KG</b></p>
                                                             </li>
                                                         </ul>
                                                     })
