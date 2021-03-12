@@ -503,6 +503,10 @@ app.get('/get-restaurants', (req, res, next) => {
 })
 
 app.post("/logout", (req, res, next) => {
+   res.cookie('jToken' , '' ,{
+       maxAge: 0,
+       httpOnly : true,
+   } )
     res.clearCookie('jToken');
     res.send({
         message: 'logout succesfully'
