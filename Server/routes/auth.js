@@ -15,7 +15,7 @@ api.post("/signup", (req, res, next) => {
     if (!req.body.userEmail
         || !req.body.userPassword
         || !req.body.userName
-        || !req.body.gender
+    
     ) {
         res.status(403).send(`
             please send name, email, passwod and gender in json body.
