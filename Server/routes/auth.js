@@ -91,7 +91,6 @@ api.post("/login", (req, res, next) => {
 
             bcrypt.varifyHash(req.body.userPassword, user.userPassword).then(isMatched => {
                 if (isMatched) {
-
                     var token =
                         jwt.sign({
                             id: user._id,

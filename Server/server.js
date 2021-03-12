@@ -8,6 +8,7 @@ var express = require("express");
 var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var cors = require("cors");
+var bcrypt = require("bcrypt-inzi");
 var jwt = require('jsonwebtoken'); // https://github.com/auth0/node-jsonwebtoken
 var cookieParser = require("cookie-parser");
 var path = require("path");
@@ -158,11 +159,10 @@ app.get("/myorders", (req, res, next) => {
     })
 });
 
-app.delete('/delete-order' ,(req , res)=>{
-    if (!req.body.id)
-    {
+app.delete('/delete-order', (req, res) => {
+    if (!req.body.id) {
         res.send({
-            message : `
+            message: `
             Please send order id in the json body 
             e.g:
             "id" : '12309230fvkid'
@@ -170,17 +170,17 @@ app.delete('/delete-order' ,(req , res)=>{
         });
     }
 
-    orderPlaced.findById(req.body.id , {} , (err,data)=>{
-        if (!err){
+    orderPlaced.findById(req.body.id, {}, (err, data) => {
+        if (!err) {
             data.remove()
             res.status(200).send({
-                message : 'Request canceled succesfully'
+                message: 'Request canceled succesfully'
             })
         }
-        else{
-                res.status(500).send({
-                    message : 'server error'
-                })
+        else {
+            res.status(500).send({
+                message: 'server error'
+            })
         }
     })
 })
@@ -228,6 +228,7 @@ app.post('/redeem-voucher', (req, res, next) => {
         return;
     }
 
+
     userModel.findOne({ userEmail: req.body.jToken.userEmail }, {}, (err, user) => {
         if (!err) {
             restaurantModel.findById(req.body.id, {}, (err, voucher) => {
@@ -248,9 +249,9 @@ app.post('/redeem-voucher', (req, res, next) => {
                                 }
                             })
                         }
-                        else{
+                        else {
                             res.status(407).send({
-                                message : 'not enough points'
+                                message: 'not enough points'
                             })
                         }
                     }
@@ -274,6 +275,54 @@ app.post('/redeem-voucher', (req, res, next) => {
         }
     })
 })
+app.post('/update-password', (req, res, next) => {
+    if (!req.body.oldPassword || !req.body.newPassword) {
+        res.send({
+            message:
+                `
+        please send following in json body
+        e.g
+        "oldPassword" : "xxx",
+        newPassword : "xxxx"
+        `
+        })
+        return
+    }
+    userModel.findOne({ userEmail: req.body.jToken.userEmail }, (err, user) => {
+        if (!err) {
+            bcrypt.varifyHash(req.body.oldPassword, user.userPassword).then(isMatched => {
+                if (isMatched) {
+                    bcrypt.stringToHash(req.body.newPassword).then(hashPassword => {
+                        user.updateOne({ userPassword: hashPassword }, (err, updated) => {
+                            if (!err) {
+                                res.status(200).send({
+                                    message: 'password updated successfully'
+                                })
+                            }
+                            else {
+                                res.status(500).send({
+                                    message: 'server error'
+                                })
+                            }
+                        })
+                    })
+                }
+                else {
+                    res.status(403).send({
+                        message: `Old password didn't match`
+                    })
+                }
+            })
+        }
+        else {
+            res.status(501).send({
+                message: 'server error'
+            });
+        }
+    })
+
+})
+
 
 // Admin api's
 
