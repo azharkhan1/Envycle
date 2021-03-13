@@ -214,6 +214,7 @@ app.get("/get-materials", (req, res, next) => {
 });
 
 app.post('/redeem-voucher', (req, res, next) => {
+    console.log('req body' , req.body);
     if (!req.body.id || !req.body.passcode) {
         res.status(404).send({
             message: `
@@ -228,24 +229,26 @@ app.post('/redeem-voucher', (req, res, next) => {
         return;
     }
 
-
     userModel.findOne({ userEmail: req.body.jToken.userEmail }, {}, (err, user) => {
         if (!err) {
             restaurantModel.findById(req.body.id, {}, (err, voucher) => {
                 if (!err) {
                     if (voucher.passcode === req.body.passcode) {
-                        if (voucher.points >= user.points) {
+                        console.log('passcode matched');
+                        if (user.points >= voucher.points ) {
                             user.updateOne({ points: user.points - voucher.points }, (err, redeemed) => {
                                 if (!err) {
                                     res.status(200).send({
                                         message: 'Voucher redeemed succesfully',
                                         user: user,
                                     })
+                                    console.log('updated success')
                                 }
                                 else {
                                     res.status(403).send({
                                         message: 'server error'
                                     })
+                                    console.log('not updated')
                                 }
                             })
                         }
@@ -253,6 +256,8 @@ app.post('/redeem-voucher', (req, res, next) => {
                             res.status(407).send({
                                 message: 'not enough points'
                             })
+                            console.log('no enough points' , user.points)
+                            console.log('restaurant points' , voucher.points)
                         }
                     }
                     else {
@@ -275,6 +280,7 @@ app.post('/redeem-voucher', (req, res, next) => {
         }
     })
 })
+
 app.post('/update-password', (req, res, next) => {
     if (!req.body.oldPassword || !req.body.newPassword) {
         res.send({
@@ -503,10 +509,10 @@ app.get('/get-restaurants', (req, res, next) => {
 })
 
 app.post("/logout", (req, res, next) => {
-   res.cookie('jToken' , '' ,{
-       maxAge: 0,
-       httpOnly : true,
-   } )
+    res.cookie('jToken', '', {
+        maxAge: 0,
+        httpOnly: true,
+    })
     res.clearCookie('jToken');
     res.send({
         message: 'logout succesfully'
