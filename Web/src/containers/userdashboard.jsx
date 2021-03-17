@@ -39,13 +39,13 @@ export default function UserDashboard() {
 
     const globalState = useGlobalState();
 
+    var [products, setProducts] = useState([]);
     var [cart, setCart] = useState([]);
-    var [change , setChange] = useState(true);
+    var [change, setChange] = useState(true);
     var [orderMessage, setMessage] = useState("Cart");
     var address = useRef();
     var phoneNo = useRef();
     var remarks = useRef();
-    var [products, setProducts] = useState([]);
     // var [products, setProducts] = useState([
     //     {
     //         product: 'Cardboard',
@@ -76,7 +76,7 @@ export default function UserDashboard() {
             console.log('', res.data.materials);
             setProducts(res.data.materials);
         }).catch((err) => {
-
+            alert('some error occoured');
         })
 
     }, [change])
@@ -101,22 +101,27 @@ export default function UserDashboard() {
 
     }
 
-    function removeQty(index) {
 
+    function removeQty(index) {
         if (cart[index].quantity > 5) {
             var prevCart = [...cart];
             prevCart[index].quantity -= 5;
             setCart(prevCart);
         }
         else {
-            var products_change = [...products];
-            products_change[index].added = false;
-            setProducts(products_change);
-            setChange(!change);
+            for (let i = 0; i < products.length; i++) {
+                if (cart[index].product === products[i].product) {
+                    var products_change = [...products];
+                    products_change[i].added = false;
+                    setProducts(products_change);
+                }
+            }
             let old_cart = [...cart]
+            setChange(!change);
             old_cart.splice(index, 1);
             setCart(old_cart);
         }
+
     }
 
     function checkOut(e) {
@@ -133,8 +138,7 @@ export default function UserDashboard() {
             return
         }
 
-        console.log('phone number', phoneNo.current.value)
-        console.log('remarks', remarks.current.value)
+
 
         axios({
             method: 'post',
@@ -169,26 +173,26 @@ export default function UserDashboard() {
         <div>
             <div className="wrapper">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className='container'>
-                    <a className="navbar-brand" href="#">{globalState.user.userName}</a>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon" />
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarText">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to='/my-requests'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
-                            </li>
-                        </ul>
+                    <div className='container'>
+                        <a className="navbar-brand" href="#">{globalState.user.userName}</a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon" />
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarText">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
+                                </li>
+                                <li className="nav-item active">
+                                    <Link to='/my-requests'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
+                                </li>
+                                <li className="nav-item active">
+                                    <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
+                                </li>
+                            </ul>
 
-                        <Logout />
-                    </div>
+                            <Logout />
+                        </div>
                     </div>
                 </nav>
                 <main>
