@@ -24,38 +24,39 @@ import Logout from '../components/logout';
 export default function MyRequests() {
     const globalState = useGlobalState();
     const [orders, setOrders] = React.useState([]);
-    const [change , handleChange] = React.useState(true);
+    const [change, handleChange] = React.useState(true);
     useEffect(() => {
         axios({
             method: 'get',
             url: `${url}/myorders`,
         }).then((response) => {
-            console.log('my orders , ', response)
-            setOrders(response.data.placedRequests);
+            var userRequests = response.data.placedRequests.slice().reverse();
+            setOrders(userRequests);
         }, (error) => {
             console.log("an error occured");
         })
     }, [change])
 
-    const deleteOrder = (id)=>{
+    const deleteOrder = (id) => {
         axios({
-            method:'delete',
-            url : `${url}/delete-order`,
-            data : {
-                id : id,
+            method: 'delete',
+            url: `${url}/delete-order`,
+            data: {
+                id: id,
             },
-        }).then((response)=>{
+        }).then((response) => {
             alert(response.data.message);
             handleChange(!change);
-        }).catch((error)=>{
+        }).catch((error) => {
             alert('server error');
         })
     }
 
     return (
         <div>
-            <div className="wrapper">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+
+            <nav className="navbar navbar-expand-lg navbar-light bg-light mb-5">
+                <div className='container'>
                     <a className="navbar-brand" href="#">{globalState.user.userName}</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
@@ -74,57 +75,55 @@ export default function MyRequests() {
                         </ul>
                         <Logout />
                     </div>
-                </nav>
-                <main>
-                    <div className="card text-center mx-auto" style={{ width: '28rem' }}>
-                        <div className="card-body mx-auto">
-                            <div>
-                                {
-                                    orders.reverse().map(({ cart, total, phoneNo, address, status , _id}, index) => {
-                                        return (
-                                            <div key={index} className="card-body mb-4" style={{ boxShadow: "0 0 6px grey" }}>
-                                                <div className='mt-2 px-2 py-2'>
-                                                    <span className='float-left'>Status:</span> <span className={status === 'Pending' ? 'text-warning float-right' : status === 'Declined' ? 'text-danger float-right' : 'text-success float-right'}>{status}</span>
+                </div>
+            </nav>
+            <div className='container '>
+                <div className='row '>
+                    {
+                        orders.map(({ cart, total, phoneNo, address, status, _id }, index) => {
+                            return (
+                                <div className='col-md-3 col-sm-12 '>
+                                    <div key={index} className="card-body mb-4" style={{ boxShadow: "0 0 6px grey", height: '300px' }}>
+                                        <div className='mt-2 px-2 py-2'>
+                                            <span className='float-left'>Status:</span> <span className={status === 'Pending' ? 'text-warning float-right' : status === 'Declined' ? 'text-danger float-right' : 'text-success float-right'}>{status}</span>
+                                        </div>
+                                        <hr />
+                                        <div className='mt-2  px-2 py-2'>
+                                            <span className="float-left">Phone: </span> <span className="float-right">{phoneNo}</span>
+                                        </div>
+                                        <hr />
+                                        <div className='mb-2  px-2 py-2'>
+                                            <span className="float-left">Address: </span> <span className="float-right">{address}</span>
+                                        </div>
+                                        <hr />
+
+                                        {
+
+                                            cart.map((cartVal, i) => {
+                                                return <ul key={i}>
+                                                    <li>
+                                                        <p>{cartVal.product ? cartVal.product : cartVal.name} <b> x {cartVal.quantity} KG</b></p>
+                                                    </li>
+                                                </ul>
+                                            })
+                                        }
+                                        {
+                                            status === 'Pending' ?
+                                                <div className='text-center'>
+                                                    <button onClick={() => deleteOrder(_id)} className="btn btn-danger mb-2 w-100">Cancel Request</button>
                                                 </div>
-                                                <hr />
-                                                <div className='mt-2  px-2 py-2'>
-                                                    <span className="float-left">Phone: </span> <span className="float-right">{phoneNo}</span>
-                                                </div>
-                                                <hr />
-                                                <div className='mb-2  px-2 py-2'>
-                                                    <span className="float-left">Address: </span> <span className="float-right">{address}</span>
-                                                </div>
-                                                <hr />
+                                                : ''
+                                        }
+                                    </div>
+                                </div>
 
-                                                {
-
-                                                    cart.map((cartVal, i) => {
-                                                        return <ul key={i}>
-                                                            <li>
-                                                                <p>{cartVal.product ? cartVal.product : cartVal.name} <b> x {cartVal.quantity} KG</b></p>
-                                                            </li>
-                                                        </ul>
-                                                    })
-                                                }
-                                                {
-                                                    status === 'Pending' ?
-                                                        <div className='text-center'>
-                                                            <button onClick={()=> deleteOrder(_id)}className="btn btn-danger mb-2 w-100">Cancel Request</button>
-                                                        </div>
-                                                        : ''
-                                                }
-                                            </div>
-
-                                        )
-                                    })
-                                }
-
-                            </div>
-                        </div>
-                    </div>
-                </main>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
+
     )
 }
 

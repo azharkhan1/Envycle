@@ -3,6 +3,7 @@ import {
   HashRouter,
   Redirect,
   Route,
+  Switch,
 } from "react-router-dom";
 
 
@@ -30,54 +31,54 @@ export default function AppRouter() {
     <HashRouter>
       {(globalState.loginStatus === false) ?
         <>
-          <Route exact={true} path="/">
-            <Signin />
-          </Route>
-
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/forget-password">
-            <ForgetPassword />
-          </Route>
-          <Route path="*">
-            <Redirect to="/" />
-          </Route>
+          <Switch>
+            <Route exact={true} path="/">
+              <Signin />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+            <Route path="/forget-password">
+              <ForgetPassword />
+            </Route>
+          </Switch>
         </>
         : null}
       {/* private routes */}
 
       {(globalState.role === "user" && globalState.loginStatus === true) ?
         <>
-          <Route exact path="/">
-            <UserDashboard />
-          </Route>
-          <Route exact path="/my-requests">
-            <MyRequests />
-          </Route>
-          <Route exact path="/redeem-voucher">
-            <RedeemVoucher />
-          </Route>
-          <Route path="*">
-            <Redirect to="/" />
-          </Route>
+          <Switch>
+            <Route exact path="/">
+              <UserDashboard />
+            </Route>
+            <Route exact path="/my-requests">
+              <MyRequests />
+            </Route>
+            <Route exact path="/redeem-voucher">
+              <RedeemVoucher />
+            </Route>
+            <Route path='*'>
+              <UserDashboard />
+            </Route>
+          </Switch>
         </>
         : null}
       {(globalState.role === "admin" && globalState.loginStatus === true) ?
 
         <>
-          <Route exact path="/">
-            <VendorDashboard />
-          </Route>
-          <Route  path="/add-restaurant">
-            <AddRestaurant />
-          </Route>
-          <Route  path="/add-product">
-            <AddProduct />
-          </Route>
-          <Route path="*">
-            <Redirect to="/" />
-          </Route>
+          <Switch>
+            <Route exact path="/">
+              <VendorDashboard />
+            </Route>
+            <Route path="/add-restaurant">
+              <AddRestaurant />
+            </Route>
+            <Route path="/add-product">
+              <AddProduct />
+            </Route>
+
+          </Switch>
         </>
         : null}
     </HashRouter >
