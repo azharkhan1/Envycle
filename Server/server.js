@@ -53,24 +53,27 @@ app.use(function (req, res, next) {
             const nowDate = new Date().getTime();
             const diff = nowDate - issueDate; // 86400,000
 
-            if (diff > 3000000) { // expire after 5 min (in milis)
+            if (diff > 300000) { // expire after 5 min (in milis)
+                res.clearCookie('jToken');
                 res.status(401).send("token expired")
-            }
-            var token = jwt.sign({
-                id: decodedData.id,
-                userName: decodedData.userName,
-                userEmail: decodedData.userEmail,
-                role: decodedData.role,
-                points: decodedData.points,
-            }, SERVER_SECRET)
-            res.cookie('jToken', token, {
-                maxAge: 86_400_000,
-                httpOnly: true
-            });
-            req.body.jToken = decodedData;
-            req.headers.jToken = decodedData;
-            next();
 
+            }
+            else {
+                var token = jwt.sign({
+                    id: decodedData.id,
+                    userName: decodedData.userName,
+                    userEmail: decodedData.userEmail,
+                    role: decodedData.role,
+                    points: decodedData.points,
+                }, SERVER_SECRET)
+                res.cookie('jToken', token, {
+                    maxAge: 86_400_000,
+                    httpOnly: true
+                });
+                req.body.jToken = decodedData;
+                req.headers.jToken = decodedData;
+                next();
+            }
         } else {
             res.status(401).send("invalid token")
         }
@@ -214,7 +217,7 @@ app.get("/get-materials", (req, res, next) => {
 });
 
 app.post('/redeem-voucher', (req, res, next) => {
-    console.log('req body' , req.body);
+    console.log('req body', req.body);
     if (!req.body.id || !req.body.passcode) {
         res.status(404).send({
             message: `
@@ -235,7 +238,7 @@ app.post('/redeem-voucher', (req, res, next) => {
                 if (!err) {
                     if (voucher.passcode === req.body.passcode) {
                         console.log('passcode matched');
-                        if (user.points >= voucher.points ) {
+                        if (user.points >= voucher.points) {
                             user.updateOne({ points: user.points - voucher.points }, (err, redeemed) => {
                                 if (!err) {
                                     res.status(200).send({
@@ -256,8 +259,8 @@ app.post('/redeem-voucher', (req, res, next) => {
                             res.status(407).send({
                                 message: 'not enough points'
                             })
-                            console.log('no enough points' , user.points)
-                            console.log('restaurant points' , voucher.points)
+                            console.log('no enough points', user.points)
+                            console.log('restaurant points', voucher.points)
                         }
                     }
                     else {
