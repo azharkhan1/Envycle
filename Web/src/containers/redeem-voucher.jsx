@@ -64,31 +64,39 @@ export default function MyRequests() {
 
     return (
         <div>
-            <div className="wrapper">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon" />
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarText">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to='/my-requests'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
-                            </li>
+           
+           <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <div className='container'>
+                        <a className="navbar-brand" href="#">{globalState.user.userName}</a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon" />
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarText">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
+                                </li>
+                                <li className="nav-item active">
+                                    <Link to='/my-requests'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
+                                </li>
+                                <li className="nav-item active">
+                                    <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
+                                </li>
+                            </ul>
 
-                        </ul>
-                        <Logout />
+                            <Logout />
+                        </div>
                     </div>
                 </nav>
-                <main>
+                
+                    <div class='container '>
+                    <div class='row'>
+
                     {
                         restaurants.map(({ name, location, passcode, discount, points, _id }, index) => {
-                            return <div key={index} className="card mx-auto px-2 py-2 mb-3" style={{ width: '18rem' }}>
+                            return    <div class='col-md-4 col-sm-12 mt-5'>
+                         
+                            <div key={index} className="card mx-auto px-2 py-2 mb-3" style={{ width: '18rem' }}>
                                 <div className="card-body ">
                                     <div className='mt-2  px-2 py-2'>
                                         <span className="float-left">Name: </span> <span className="float-right">{name}</span>
@@ -105,19 +113,16 @@ export default function MyRequests() {
                                         <button style={{ display: 'block', width: '100%' }} className=' mt-2 text-center mx-auto w-100 ' onClick={globalState.user.points >= points ? () => redeem(_id, index) : () => { return }} className="btn btn-primary">{parseInt(globalState.user.points) >= points ? `Reddem ${name} Voucher` : `Need ${points - globalState.user.points} Point to Redeem`}</button>
                                     </div>
                                 </div>
+                                </div>
                             </div>
 
-                        })
+})
 
 
-                    }
-                </main>
-
-
-
-
-            </div>
-        </div>
+}
+</div>
+</div>
+                    </div>
     )
 }
 

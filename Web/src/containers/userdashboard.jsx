@@ -46,6 +46,7 @@ export default function UserDashboard() {
     var address = useRef();
     var phoneNo = useRef();
     var remarks = useRef();
+    
     // var [products, setProducts] = useState([
     //     {
     //         product: 'Cardboard',
@@ -90,6 +91,7 @@ export default function UserDashboard() {
         var valueToAdd = {
             product: value.name,
             quantity: 5,
+            _id: value._id,
         }
         setCart([...cart, valueToAdd]);
         setMessage("Cart (minimum 20kg)");
@@ -103,22 +105,27 @@ export default function UserDashboard() {
 
 
     function removeQty(index) {
+
+        console.log('product id is ', products[index]._id)
         if (cart[index].quantity > 5) {
             var prevCart = [...cart];
             prevCart[index].quantity -= 5;
             setCart(prevCart);
         }
         else {
+            var products_change = [...products];
             for (let i = 0; i < products.length; i++) {
-                if (cart[index].product === products[i].product) {
-                    var products_change = [...products];
+                if (cart[index]._id === products[i]._id) {
+                    console.log('id matched');
                     products_change[i].added = false;
-                    setProducts(products_change);
+                }
+                else {
+                    console.log('not matched');
                 }
             }
             let old_cart = [...cart]
-            setChange(!change);
             old_cart.splice(index, 1);
+            setProducts(products_change);
             setCart(old_cart);
         }
 
@@ -137,8 +144,6 @@ export default function UserDashboard() {
             document.getElementById('order-message').style.color = 'red';
             return
         }
-
-
 
         axios({
             method: 'post',

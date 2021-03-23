@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
             const nowDate = new Date().getTime();
             const diff = nowDate - issueDate; // 86400,000
 
-            if (diff > 300000) { // expire after 5 min (in milis)
+            if (diff > 30000000) { // expire after 5 min (in milis)
                 res.clearCookie('jToken');
                 res.status(401).send("token expired")
 
@@ -511,6 +511,54 @@ app.get('/get-restaurants', (req, res, next) => {
     })
 })
 
+app.post('/update-restaurant', (req, res, next) => {
+    
+    restaurantModel.findById({_id : req.body.id}, (err, data) => {
+        if (!err) {
+            data.updateOne(
+                {
+                    name : req.body.name , 
+                    location : req.body.location,
+                    discount : req.body.discount,
+                    passcode : req.body.passcode,
+                    points: req.body.points,
+                }
+                ).then((updated)=>{
+                    res.status(200).send({
+                        message : 'succesfully updated'
+                    })
+                }).catch((err)=>{
+                    res.status(500).send({
+                        message : 'some error occured'
+                    })
+                })
+        }
+        else {
+            res.status(501).send({
+                message: 'server error',
+            });
+        }
+    })
+})
+
+app.delete('/delete-restaurant' , (req,res)=>{
+
+    restaurantModel.findById({_id : req.body.id} , (err,restaurant)=>{
+       if (!err)
+       {
+           restaurant.remove()
+           res.status(200).send({
+               message : 'succesfully removed'
+           })
+       }
+       else{
+           res.status(500).send({
+               message : 'some error occoured'
+           })
+       }
+    })
+})
+
 app.post("/logout", (req, res, next) => {
     res.cookie('jToken', '', {
         maxAge: 0,
@@ -527,4 +575,3 @@ app.post("/logout", (req, res, next) => {
 server.listen(PORT, () => {
     console.log("server is running on: ", PORT);
 })
-

@@ -90,7 +90,8 @@ export default function VendorDashboard() {
     return (
         <div>
             <div className="wrapper">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div class='container'>
                     <a className="navbar-brand" href="#">{globalState.user.userName}</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
@@ -108,11 +109,15 @@ export default function VendorDashboard() {
                                 <Link to='/add-restaurant'><a className="nav-link" >Add Restaurant<span className="sr-only"></span></a></Link>
                             </li>
                             <li className="nav-item active">
-                                <Link to='/add-product'><a className="nav-link" >Add Product<span className="sr-only"></span></a></Link>
+                                <Link to='/add-product'><a className="nav-link" >Add Material<span className="sr-only"></span></a></Link>
+                            </li>
+                            <li className="nav-item active">
+                                <Link to='/edit-restaurant'><a className="nav-link" >Edit Restaurant<span className="sr-only"></span></a></Link>
                             </li>
                         </ul>
                         <Logout />
                     </div>
+                </div>
                 </nav>
                 <main>
                     <div className="main-section">
@@ -136,9 +141,9 @@ export default function VendorDashboard() {
                                     </div>
                                     <div className="col-lg-6 col-md-8 no-pd">
                                         <div className="main-ws-sec">
-                                            <div className="post-topbar">
+                                            {/* <div className="post-topbar">
 
-                                            </div>
+                                            </div> */}
                                             <div>
                                                 {
                                                     orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks }, index) => {
@@ -160,6 +165,7 @@ export default function VendorDashboard() {
                                                                     <span className='float-right'>{address}</span>
                                                                         </div>
                                                                         <hr/>
+                                                                     
 
                                                                     {
                                                                         cart.map((cartVal, i) => {

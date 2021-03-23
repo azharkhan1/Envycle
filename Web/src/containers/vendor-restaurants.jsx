@@ -54,29 +54,35 @@ export default function AddRestaurant() {
 
     return (
         <div className="wrapper">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand" href="#">{globalState.user.userName}</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon" />
-                </button>
-                <div className="collapse navbar-collapse" id="navbarText">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
-                        </li>
-                        <li className="nav-item active">
-                            <Link to='/checkorders'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
-                        </li>
-                        <li className="nav-item active">
-                            <Link to='/add-restaurant'><a className="nav-link" >Add Restaurant<span className="sr-only"></span></a></Link>
-                        </li>
-                        <li className="nav-item active">
-                            <Link to='/add-product'><a className="nav-link" >Add Product<span className="sr-only"></span></a></Link>
-                        </li>
-                    </ul>
-                    <Logout />
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div class='container'>
+                    <a className="navbar-brand" href="#">{globalState.user.userName}</a>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon" />
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarText">
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item active">
+                                <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
+                            </li>
+                            <li className="nav-item ">
+                                <Link to='/checkorders'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
+                            </li>
+
+                            <li className="nav-item active">
+                                <Link to='/add-restaurant'><a className="nav-link" >Add Restaurant<span className="sr-only"></span></a></Link>
+                            </li>
+                            <li className="nav-item active">
+                                <Link to='/add-product'><a className="nav-link" >Add Material<span className="sr-only"></span></a></Link>
+                            </li>
+                            <li className="nav-item active">
+                                <Link to='/edit-restaurant'><a className="nav-link" >Edit Restaurant<span className="sr-only"></span></a></Link>
+                            </li>
+                        </ul>
+                        <Logout />
+                    </div>
                 </div>
-            </nav>
+                </nav>
             <main>
                 <div className="main-section">
                     <div className="container">

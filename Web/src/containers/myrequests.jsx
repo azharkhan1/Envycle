@@ -54,7 +54,6 @@ export default function MyRequests() {
 
     return (
         <div>
-
             <nav className="navbar navbar-expand-lg navbar-light bg-light mb-5">
                 <div className='container'>
                     <a className="navbar-brand" href="#">{globalState.user.userName}</a>
@@ -82,14 +81,14 @@ export default function MyRequests() {
                     {
                         orders.map(({ cart, total, phoneNo, address, status, _id }, index) => {
                             return (
-                                <div className='col-md-3 col-sm-12 '>
+                                <div className='col-md-4 col-sm-12 '>
                                     <div key={index} className="card-body mb-4" style={{ boxShadow: "0 0 6px grey", height: '300px' }}>
                                         <div className='mt-2 px-2 py-2'>
-                                            <span className='float-left'>Status:</span> <span className={status === 'Pending' ? 'text-warning float-right' : status === 'Declined' ? 'text-danger float-right' : 'text-success float-right'}>{status}</span>
+                                            <span className='float-left heading' >Status:</span> <span className={status === 'Pending' ? 'text-warning float-right' : status === 'Declined' ? 'text-danger float-right' : 'text-success float-right'}>{status}</span>
                                         </div>
                                         <hr />
                                         <div className='mt-2  px-2 py-2'>
-                                            <span className="float-left">Phone: </span> <span className="float-right">{phoneNo}</span>
+                                            <span className="float-left heading" >Phone: </span> <span className="float-right">{phoneNo}</span>
                                         </div>
                                         <hr />
                                         <div className='mb-2  px-2 py-2'>
