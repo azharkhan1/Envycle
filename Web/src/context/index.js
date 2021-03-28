@@ -32,7 +32,7 @@ export function GlobalStateProvider({ children }) {
         }).then((response) => {
                 setData(prev => ({ ...prev, loginStatus: true , user : response.data.profile , role : response.data.profile.role }));
         }, (error) => {
-            setData(prev => ({ ...prev, loginStatus: false }))
+            setData(prev => ({ ...prev, loginStatus: false , user : null , role : null}))
         });
     } , [] );
   

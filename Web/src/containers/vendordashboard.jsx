@@ -49,6 +49,7 @@ export default function VendorDashboard() {
             console.log("an error occured");
         })
         socket.on('requests', (data) => {
+            console.log('data is',data);
             setRealTime(!realTime);
         })
     }, [realTime])
@@ -90,34 +91,34 @@ export default function VendorDashboard() {
     return (
         <div>
             <div className="wrapper">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div class='container'>
-                    <a className="navbar-brand" href="#">{globalState.user.userName}</a>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon" />
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarText">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
-                            </li>
-                            <li className="nav-item ">
-                                <Link to='/checkorders'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
-                            </li>
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class='container'>
+                        <a className="navbar-brand" href="#">{globalState.user.userName}</a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon" />
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarText">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
+                                </li>
+                                <li className="nav-item ">
+                                    <Link to='/checkorders'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
+                                </li>
 
-                            <li className="nav-item active">
-                                <Link to='/add-restaurant'><a className="nav-link" >Add Restaurant<span className="sr-only"></span></a></Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to='/add-product'><a className="nav-link" >Add Material<span className="sr-only"></span></a></Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to='/edit-restaurant'><a className="nav-link" >Edit Restaurant<span className="sr-only"></span></a></Link>
-                            </li>
-                        </ul>
-                        <Logout />
+                                <li className="nav-item active">
+                                    <Link to='/add-restaurant'><a className="nav-link" >Add Restaurant<span className="sr-only"></span></a></Link>
+                                </li>
+                                <li className="nav-item active">
+                                    <Link to='/add-product'><a className="nav-link" >Add Material<span className="sr-only"></span></a></Link>
+                                </li>
+                                <li className="nav-item active">
+                                    <Link to='/edit-restaurant'><a className="nav-link" >Edit Restaurant<span className="sr-only"></span></a></Link>
+                                </li>
+                            </ul>
+                            <Logout />
+                        </div>
                     </div>
-                </div>
                 </nav>
                 <main>
                     <div className="main-section">
@@ -148,51 +149,51 @@ export default function VendorDashboard() {
                                                 {
                                                     orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks }, index) => {
                                                         return (
-                                                            <div key={index} className="card" style={{ width: 'rem' , margin:'0 auto' }}>
+                                                            <div key={index} className="card" style={{ width: 'rem', margin: '0 auto' }}>
                                                                 <div className="card-body">
                                                                     <div>
-                                                                    <span>Email : </span>
-                                                                    <span className='float-right'>{userEmail}</span>
-                                                                        </div>
-                                                                        <hr/>
+                                                                        <span>Email : </span>
+                                                                        <span className='float-right'>{userEmail}</span>
+                                                                    </div>
+                                                                    <hr />
                                                                     <div className='mt-3 mb-1'>
-                                                                    <span >Phone : </span>
-                                                                    <span className='float-right'>{phoneNo}</span>
-                                                                        </div>
-                                                                        <hr/>
-                                                                        <div className='mt-3'>
-                                                                    <span>Address : </span>
-                                                                    <span className='float-right'>{address}</span>
-                                                                        </div>
-                                                                        <hr/>
-                                                                     
+                                                                        <span >Phone : </span>
+                                                                        <span className='float-right'>{phoneNo}</span>
+                                                                    </div>
+                                                                    <hr />
+                                                                    <div className='mt-3'>
+                                                                        <span>Address : </span>
+                                                                        <span className='float-right'>{address}</span>
+                                                                    </div>
+                                                                    <hr />
+
 
                                                                     {
                                                                         cart.map((cartVal, i) => {
                                                                             return <ul key={i}>
                                                                                 <li>
-                                                                                <div className='mt-2'>
-                                                                    <span className="card-title">Product : </span>
-                                                                    <span className='float-right'>{cartVal.product}  {cartVal.quantity} kg</span>
-                                                                        </div>
+                                                                                    <div className='mt-2'>
+                                                                                        <span className="card-title">Product : </span>
+                                                                                        <span className='float-right'>{cartVal.product}  {cartVal.quantity} kg</span>
+                                                                                    </div>
                                                                                 </li>
                                                                             </ul>
                                                                         })
-                                                                        
+
                                                                     }
-                                                                    {remarks ? <div  className='text-center'><small>Remarks: {remarks}</small></div> : ''}
-                                                                    <div className='text-center mt-4'> 
-                                                                    <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3  text-center">Accept Order</button>
-                                                                <button onClick={() => declineOrder(index)} className="btn btn-danger ml-3 text-center">Decline Order</button>
+                                                                    {remarks ? <div className='text-center'><small>Remarks: {remarks}</small></div> : ''}
+                                                                    <div className='text-center mt-4'>
+                                                                        <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3  text-center">Accept Order</button>
+                                                                        <button onClick={() => declineOrder(index)} className="btn btn-danger ml-3 text-center">Decline Order</button>
 
                                                                     </div>
-                                                                
+
                                                                 </div>
                                                             </div>
                                                         )
                                                     })
                                                 }
-                                                
+
                                             </div>
                                         </div>
                                     </div>

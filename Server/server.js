@@ -56,7 +56,6 @@ app.use(function (req, res, next) {
             if (diff > 30000000) { // expire after 5 min (in milis)
                 res.clearCookie('jToken');
                 res.status(401).send("token expired")
-
             }
             else {
                 var token = jwt.sign({
@@ -179,6 +178,7 @@ app.delete('/delete-order', (req, res) => {
             res.status(200).send({
                 message: 'Request canceled succesfully'
             })
+            io.emit('requests','cancelled');
         }
         else {
             res.status(500).send({
@@ -392,6 +392,7 @@ app.patch('/declineOrder', (req, res, next) => {
                             res.send({
                                 message: 'order has been declined',
                             })
+                          io.emit("requests" , 'declined order');
                         }
                         else {
                             res.status(501).send({

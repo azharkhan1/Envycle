@@ -133,7 +133,7 @@ export default function Signup() {
                                                                 type='radio'
                                                                 name='gender'
                                                                 value='Male'
-                                                                class='radioBtn'
+                                                                className='radioBtn'
                                                                 style={{ marginLeft: 5 }}
                                                                 id='male'
                                                                 required
@@ -145,7 +145,7 @@ export default function Signup() {
                                                                 type='radio'
                                                                 name='gender'
                                                                 value='Female'
-                                                                class='radioBtn'
+                                                                className='radioBtn'
                                                                 style={{ marginLeft: 5 }}
                                                                 required
                                                             />
