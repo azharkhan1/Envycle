@@ -16,6 +16,7 @@ import ForgetPassword from '../containers/forget-password';
 import RedeemVoucher from '../containers/redeem-voucher';
 import AddRestaurant from '../containers/vendor-restaurants';
 import EditRestaurant from '../containers/edit-restaurant';
+import AllRequests from '../containers/admin-see-all-requests';
 // Improrting Global context
 import { useGlobalState } from '../context/index';
 import AddProduct from "../containers/add-product";
@@ -79,6 +80,9 @@ export default function AppRouter() {
             </Route>
             <Route path="/edit-restaurant">
               <EditRestaurant />
+            </Route>
+            <Route path="/all-requests">
+              <AllRequests />
             </Route>
           </Switch>
         </>

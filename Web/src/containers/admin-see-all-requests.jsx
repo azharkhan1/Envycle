@@ -27,7 +27,7 @@ import socket from "../config/socket";
 // import components
 import Logout from '../components/logout';
 
-export default function VendorDashboard() {
+export default function AllRequests() {
 
 
     const globalState = useGlobalState();
@@ -39,12 +39,8 @@ export default function VendorDashboard() {
             method: 'get',
             url: `${url}/getOrders`,
         }).then((response) => {
-            response.data.placedRequests.map((value) => {
-                if (value.status === 'Pending') {
-                    arr.push(value);
-                }
-            })
-            setOrders(arr);
+          
+            setOrders(response.data.placedRequests);
         }, (error) => {
             console.log("an error occured");
         })
@@ -54,44 +50,13 @@ export default function VendorDashboard() {
         })
     }, [realTime])
 
-    const confirmOrder = (index) => {
-        console.log(orders[index]._id)
-        axios({
-            method: 'patch',
-            url: `${url}/confirmOrder`,
-            data: {
-                id: orders[index]._id,
-                userEmail: orders[index].userEmail
-            },
+    
 
-        }).then((res) => {
-            alert('Order confirmed');
-            setRealTime(!realTime);
-        }).catch((err) => {
-            console.log("error is=>", err);
-        })
-    }
-
-    const declineOrder = (index) => {
-        console.log(orders[index]._id)
-        axios({
-            method: 'patch',
-            url: `${url}/declineOrder`,
-            data: {
-                id: orders[index]._id,
-            },
-        }).then((res) => {
-            alert('order Declined');
-            setRealTime(!realTime);
-        }).catch((err) => {
-            console.log("error is=>", err);
-        })
-    }
 
     return (
         <div>
             <div className="wrapper">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div class='container'>
                         <a className="navbar-brand" href="#">{globalState.user.userName}</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,11 +112,13 @@ export default function VendorDashboard() {
                                             </div> */}
                                             <div>
                                                 {
-                                                    orders.length>0 ?
-                                                    orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks }, index) => {
+                                                    orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks , status}, index) => {
                                                         return (
-                                                            <div key={index} className="card" style={{ width: 'rem', margin: '0 auto' }}>
+                                                            <div key={index} className="card" style={{ margin: '0 auto' }}>
                                                                 <div className="card-body">
+                                                                    <div class='text-center mb-5'>
+                                                                        <h3>Status {status}</h3>
+                                                                    </div>
                                                                     <div>
                                                                         <span>Email : </span>
                                                                         <span className='float-right'>{userEmail}</span>
@@ -183,28 +150,13 @@ export default function VendorDashboard() {
 
                                                                     }
                                                                     {remarks ? <div className='text-center'><small>Remarks: {remarks}</small></div> : ''}
-                                                                    <div className='text-center mt-4'>
-                                                                        <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3  text-center">Accept Order</button>
-                                                                        <button onClick={() => declineOrder(index)} className="btn btn-danger ml-3 text-center">Decline Order</button>
-
-                                                                    </div>
+                                                             
 
                                                                 </div>
                                                             </div>
                                                         )
                                                     })
-                                               
-                                               
-                                               : <div className='card text-center'>
-                                                <div className='card-body'>
-                                                    <div>
-                                                        <h2>
-                                                            0 requests
-                                                        </h2>
-                                                    </div>
-                                                    </div>
-
-                                               </div> }
+                                                }
 
                                             </div>
                                         </div>

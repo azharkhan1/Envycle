@@ -61,25 +61,25 @@ export default function AddRestaurant() {
                         <span className="navbar-toggler-icon" />
                     </button>
                     <div className="collapse navbar-collapse" id="navbarText">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
-                            </li>
-                            <li className="nav-item ">
-                                <Link to='/checkorders'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
-                            </li>
+                    <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
+                                </li>
+                                <li className="nav-item ">
+                                    <Link to='/all-requests'><a className="nav-link" >See All Requests<span className="sr-only"></span></a></Link>
+                                </li>
 
-                            <li className="nav-item active">
-                                <Link to='/add-restaurant'><a className="nav-link" >Add Restaurant<span className="sr-only"></span></a></Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to='/add-product'><a className="nav-link" >Add Material<span className="sr-only"></span></a></Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to='/edit-restaurant'><a className="nav-link" >Edit Restaurant<span className="sr-only"></span></a></Link>
-                            </li>
-                        </ul>
-                        <Logout />
+                                <li className="nav-item active">
+                                    <Link to='/add-restaurant'><a className="nav-link" >Add Restaurant<span className="sr-only"></span></a></Link>
+                                </li>
+                                <li className="nav-item active">
+                                    <Link to='/add-product'><a className="nav-link" >Add Material<span className="sr-only"></span></a></Link>
+                                </li>
+                                <li className="nav-item active">
+                                    <Link to='/edit-restaurant'><a className="nav-link" >Edit Restaurant<span className="sr-only"></span></a></Link>
+                                </li>
+                            </ul>
+                            <Logout />
                     </div>
                 </div>
                 </nav>
