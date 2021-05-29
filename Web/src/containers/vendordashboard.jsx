@@ -125,32 +125,20 @@ export default function VendorDashboard() {
                         <div className="container">
                             <div className="main-section-data">
                                 <div className="row">
-                                    <div className="col-lg-3 col-md-4 pd-left-none no-pd">
-                                        <div className="main-left-sidebar no-margin">
-                                            <div className="user-data full-width">
-                                                <div className="user-profile">
-                                                    <div className="username-dt">
-                                                        <div className="usr-pic">
-                                                        </div>
-                                                    </div>
-                                                    <div className="user-specs">
-                                                        <h3>{globalState.user.userName}</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-8 no-pd">
+                                   
+                                    <div className="col-lg-12 col-md-8 no-pd">
                                         <div className="main-ws-sec">
                                             {/* <div className="post-topbar">
 
                                             </div> */}
                                             <div>
+                                                <div className='row'>
                                                 {
                                                     orders.length>0 ?
                                                     orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks }, index) => {
                                                         return (
-                                                            <div key={index} className="card" style={{ width: 'rem', margin: '0 auto' }}>
+                                                            <div key={index} className='col-md-6'>
+                                                            <div className="card" style={{ width: 'rem', margin: '10px auto' }}>
                                                                 <div className="card-body">
                                                                     <div>
                                                                         <span>Email : </span>
@@ -180,7 +168,7 @@ export default function VendorDashboard() {
                                                                                 </li>
                                                                             </ul>
                                                                         })
-
+                                                                        
                                                                     }
                                                                     {remarks ? <div className='text-center'><small>Remarks: {remarks}</small></div> : ''}
                                                                     <div className='text-center mt-4'>
@@ -191,11 +179,12 @@ export default function VendorDashboard() {
 
                                                                 </div>
                                                             </div>
+                                                                    </div>
                                                         )
                                                     })
-                                               
-                                               
-                                               : <div className='card text-center'>
+                                                    
+                                                    
+                                                    : <div className='card text-center'>
                                                 <div className='card-body'>
                                                     <div>
                                                         <h2>
@@ -210,6 +199,7 @@ export default function VendorDashboard() {
                                         </div>
                                     </div>
 
+                                                   </div>
                                 </div>
                             </div>
                         </div>

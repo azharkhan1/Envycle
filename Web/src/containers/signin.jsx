@@ -47,8 +47,8 @@ function Signin() {
                 }, role: response.data.user.role,
             }));
         }, (error) => {
-            alert(error.response.data.message);
-            setMessage('User not found');
+            // alert(error.response.data.message);
+            setMessage(error.response.data.message);
         })
     }
 
@@ -78,23 +78,25 @@ function Signin() {
 
                                         <div className="sign_in_sec current" id="tab-1">
 
-                                            <h3>Sign in</h3>
-
-                                            <div className="signup-tab">
-                                                <ul style={{color:'red'}}>
-                                                    {/* <li data-tab="tab-3" className="current"><Link to="/"> User </Link></li> */}
-                                                    {/* <li data-tab="tab-4"><a href="#" title="">Company</a></li> */}
-                                                    {/* <li >   <Link to="/vendorsignin"> Company </Link> </li> */}
-                                                    {message === null ? "" : message}
-                                                </ul>
-                                            </div>
+                                        {message === '' || ' ' ? '' :
+                                        <div className="signup-tab">
+                                           <ul style={{color:'red'}}>
+                                              {/* <li data-tab="tab-3" className="current"><Link to="/"> User </Link></li> */}
+                                              {/* <li data-tab="tab-4"><a href="#" title="">Company</a></li> */}
+                                              {/* <li >   <Link to="/vendorsignin"> Company </Link> </li> */}
+                                       
+                                          </ul>
+                                      </div>
+                                        }  
+                                       
+                                          
 
                                             <form onSubmit={(e) => login(e)}>
                                                 <div className="row">
                                                     <div className="col-lg-12 no-pdd">
                                                         <div className="sn-field">
                                                             <input autoComplete="on" ref={email} type="email" name="email" placeholder="Enter Email" />
-                                                            <i className="la la-user"></i>
+                                                            <i className="la la-envelope"></i>
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-12 no-pdd">

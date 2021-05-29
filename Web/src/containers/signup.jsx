@@ -68,8 +68,8 @@ export default function Signup() {
                                     <div className="cmp-info">
                                         <div className="cm-logo">
                                             <img src="" alt="" />
-                                            <p> Signup
-                                                   </p>
+                                            {/* <p> Signup
+                                                   </p> */}
                                         </div>
                                         <img src={hamaraImage} alt="" />
                                     </div>
@@ -85,18 +85,19 @@ export default function Signup() {
                                         <div className="sign_in_sec current" id="tab-2">
 
 
-                                            <h3>Sign Up</h3>
+                                        {message === '' || ' ' ? '' : 
+                                         <div className="signup-tab">
+                                         <i className="fa fa-long-arrow-left"></i>
 
-                                            <div className="signup-tab">
-                                                <i className="fa fa-long-arrow-left"></i>
-
-                                                <ul>
-                                                    {/* <li data-tab="tab-3" className="current"><Link to="/signup"> User </Link></li> */}
-                                                    {/* <li data-tab="tab-4"><a href="#" title="">Company</a></li> */}
-                                                    {/* <li >   <Link to="/vendor"> Company </Link> </li> */}
-                                                    {message === null ? '' : message}
-                                                </ul>
-                                            </div>
+                                         <ul>
+                                             {/* <li data-tab="tab-3" className="current"><Link to="/signup"> User </Link></li> */}
+                                             {/* <li data-tab="tab-4"><a href="#" title="">Company</a></li> */}
+                                             {/* <li >   <Link to="/vendor"> Company </Link> </li> */}
+                                             {message}
+                                         </ul>
+                                     </div>
+                                        }
+                                           
                                             <div className="dff-tab current" id="tab-3">
                                                 <form onSubmit={(e) => signUp(e)}>
                                                     <div className="row">
@@ -115,7 +116,8 @@ export default function Signup() {
                                                         <div className="col-lg-12 no-pdd">
                                                             <div className="sn-field">
                                                                 <input required autoComplete="on" ref={email} type="email" placeholder="Enter email" />
-                                                                <i className="la la-lock"></i>
+                                                                <i className="la la-envelope"></i>
+
                                                             </div>
                                                         </div>
 

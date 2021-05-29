@@ -309,7 +309,8 @@ nav ul li:hover>ul,
 .wrapper {
     float: left;
     width: 100%;
-    position: relative
+    position: relative;
+    background-color:#08674b;
 }
 
 .overlay:before {
@@ -347,6 +348,9 @@ header {
     padding-bottom: 10px
 }
 
+input{
+    color:black !important;
+}
 .forum-bar {
     float: left;
     margin-top: 10px;
@@ -823,9 +827,19 @@ main {
     float: left;
     width: 100%;
     padding: 60px 0;
-    background-color: #f2f2f2;
+    background-color:#08674bc3;
+    height: 100vh;
 }
 
+.section{
+    background-color:#08674bc3;
+    height:100vh;
+}
+.card-body{
+    background-color:#fff;
+    border-radius:20px;
+
+}
 .main-section {
     float: left;
     width: 100%
@@ -2278,7 +2292,7 @@ select {
 
 .signin-popup {
     width: 870px;
-    margin: 0 auto;
+    margin: -45px auto;
     position: relative
 }
 
@@ -2339,7 +2353,7 @@ select {
 }
 
 .dff-tab.current {
-    display: block
+    display: block;
 }
 
 .cmp-info {
@@ -2459,7 +2473,9 @@ select {
 }
 
 .sign_in_sec.current {
-    display: block
+    display: block;
+    margin: 50px 0px 0px 0px;
+
 }
 
 .sign_in_sec h3 {

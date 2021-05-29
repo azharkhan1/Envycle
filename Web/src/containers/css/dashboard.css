@@ -8,6 +8,7 @@
 .card {
     border-radius: 0px;
     overflow: hidden;
+    border-radius: 15px;
 }
 
 .card-text {

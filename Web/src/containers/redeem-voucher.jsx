@@ -77,7 +77,7 @@ export default function MyRequests() {
                                     <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
                                 </li>
                                 <li className="nav-item active">
-                                    <Link to='/my-requests'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
+                                    <Link to='/my-requests'><a className="nav-link" >See Requests<span className="sr-only"></span></a></Link>
                                 </li>
                                 <li className="nav-item active">
                                     <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
@@ -88,7 +88,8 @@ export default function MyRequests() {
                         </div>
                     </div>
                 </nav>
-                
+                    <div className='section'>
+
                     <div class='container '>
                     <div class='row'>
 
@@ -120,6 +121,7 @@ export default function MyRequests() {
 
 
 }
+</div>
 </div>
 </div>
                     </div>

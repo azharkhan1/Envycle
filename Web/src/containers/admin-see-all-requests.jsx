@@ -85,12 +85,12 @@ export default function AllRequests() {
                         </div>
                     </div>
                 </nav>
-                <main>
+                
                     <div className="main-section">
                         <div className="container">
-                            <div className="main-section-data">
+                            <div className="main-section-data" style={{ marginTop: '20px'}}>
                                 <div className="row">
-                                    <div className="col-lg-3 col-md-4 pd-left-none no-pd">
+                                    {/* <div className="col-lg-3 col-md-4 pd-left-none no-pd">
                                         <div className="main-left-sidebar no-margin">
                                             <div className="user-data full-width">
                                                 <div className="user-profile">
@@ -104,17 +104,18 @@ export default function AllRequests() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-8 no-pd">
+                                    </div> */}
+                                    <div className="col-lg-12 col-md-8 no-pd">
                                         <div className="main-ws-sec">
                                             {/* <div className="post-topbar">
 
                                             </div> */}
-                                            <div>
+                                            <div className='row'>
                                                 {
                                                     orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks , status}, index) => {
                                                         return (
-                                                            <div key={index} className="card" style={{ margin: '0 auto' }}>
+                                                            <div className='col-md-6'>
+                                                            <div key={index} className="card" style={{ margin: '20px auto' }}>
                                                                 <div className="card-body">
                                                                     <div class='text-center mb-5'>
                                                                         <h3>Status {status}</h3>
@@ -147,13 +148,14 @@ export default function AllRequests() {
                                                                                 </li>
                                                                             </ul>
                                                                         })
-
+                                                                        
                                                                     }
                                                                     {remarks ? <div className='text-center'><small>Remarks: {remarks}</small></div> : ''}
                                                              
 
                                                                 </div>
                                                             </div>
+                                                                    </div>
                                                         )
                                                     })
                                                 }
@@ -166,7 +168,7 @@ export default function AllRequests() {
                             </div>
                         </div>
                     </div>
-                </main>
+            
             </div>
         </div>
     )

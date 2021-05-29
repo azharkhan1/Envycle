@@ -94,7 +94,7 @@ export default function UserDashboard() {
             _id: value._id,
         }
         setCart([...cart, valueToAdd]);
-        setMessage("Cart (minimum 20kg)");
+        setMessage("Materials (minimum 20kg)");
     }
     function addQty(index) {
         var prevCart = [...cart];
@@ -158,7 +158,7 @@ export default function UserDashboard() {
 
         }).then((response) => {
             console.log("response is = > ", response.data);
-            setMessage("Your order has been placed");
+            setMessage("Your request has been placed");
             document.getElementById('order-message').style.color = 'black';
 
             cart.map((value) => {
@@ -189,7 +189,7 @@ export default function UserDashboard() {
                                     <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
                                 </li>
                                 <li className="nav-item active">
-                                    <Link to='/my-requests'><a className="nav-link" >See Orders<span className="sr-only"></span></a></Link>
+                                    <Link to='/my-requests'><a className="nav-link" >See Requests<span className="sr-only"></span></a></Link>
                                 </li>
                                 <li className="nav-item active">
                                     <Link to='/redeem-voucher'><a className="nav-link" >Redeem Voucher<span className="sr-only"></span></a></Link>
@@ -212,16 +212,16 @@ export default function UserDashboard() {
                                                 <div className="row">
                                                     {
                                                         products.map((value, index) => {
-                                                            return <div key={index} className="card mr-2 mt-2 mx-auto text-center" style={{ width: "15rem" }} >
+                                                            return <div key={index} className="card mr-2 mt-2 mx-auto text-center px-4 py-4" style={{ width: "15rem" }} >
                                                                 <img src={value.url} className="material" alt="..." />
                                                                 <div className="card-body">
                                                                     <div className="gradient-img">
                                                                     </div>
-                                                                    <h4 className='product-name' style={{ backgroundColor: "black", color: "white" }}>{value.name}</h4>
+                                                                    <h4 className='product-name' style={{  color: "black" }}>{value.name}</h4>
 
                                                                 </div>
 
-                                                                <button onClick={value.added ? () => { return } : (e) => addCart(value, index)} className="cart-btn">{value.added ? "Added" : "Add Item"}</button>
+                                                                <button onClick={value.added ? () => { return } : (e) => addCart(value, index)} className="cart-btn">{value.added ? "Added" : "Add"}</button>
 
                                                             </div>
                                                         })
