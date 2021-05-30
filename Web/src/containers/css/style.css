@@ -310,7 +310,7 @@ nav ul li:hover>ul,
     float: left;
     width: 100%;
     position: relative;
-    background-color:#08674b;
+    background-color:#08674bc3;
 }
 
 .overlay:before {
@@ -824,13 +824,17 @@ nav>ul>li>a:hover {
 }
 
 main {
-    float: left;
+    
     width: 100%;
     padding: 60px 0;
-    background-color:#08674bc3;
+    margin: 50px auto;
     height: 100vh;
 }
-
+.centering{
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
 .section{
     background-color:#08674bc3;
     height:100vh;
@@ -841,8 +845,10 @@ main {
 
 }
 .main-section {
-    float: left;
-    width: 100%
+    
+    width: 100%;
+    background-color:08674bc3!important;
+    height:100vh;
 }
 
 .main-section-data {
@@ -5484,7 +5490,13 @@ a:hover {
     border-right: 1px solid #e4e4e4;
     border-bottom: 1px solid #e4e4e4
 }
-
+.add-btn{
+    background-color: #97BC62FF;
+    color: black;
+    border-color: transparent;
+    font-weight: 500;
+}
+ 
 .message-bar-head {
     float: left;
     width: 100%;

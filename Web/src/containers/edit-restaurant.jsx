@@ -13,7 +13,8 @@ import './css/font-awesome.min.css'
 import './css/line-awesome-font-awesome.min.css'
 import './css/jquery.mCustomScrollbar.min.css'
 import './css/flatpickr.min.css'
-
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 // importing context
 import { useGlobalState, useGlobalStateUpdate } from "../context/index";
@@ -26,6 +27,8 @@ import socket from "../config/socket";
 
 // import components
 import Logout from '../components/logout';
+
+
 
 export default function EditRestaurant() {
 
@@ -163,7 +166,7 @@ export default function EditRestaurant() {
 
                                                     {restaurants.map((value, index) => {
                                                         return <div class='col-md-12'>
-                                                            <div key={index} className="card" style={{ width: 'rem', margin: '0 auto' }}>
+                                                            <div key={index} className="card" style={{ width: 'rem', margin: '20px auto' }}>
                                                                 <div className="card-body">
                                                                     <div>
                                                                         {value.edit ? <> <label>Name</label><input id='name' class='w-100' defaultValue={value.name} /> </> : <span>Restaurant Name: {value.name}</span>}
@@ -187,10 +190,10 @@ export default function EditRestaurant() {
                                                                     <hr />
                                                                     <div >
 
-                                                                    <div class='float-left'>   {!value.edit ? <button class='btn btn-success btn-sm' onClick={() => edit(index)}>Edit</button> : <button class='btn btn-success btn-sm' onClick={() => updateRestaurant(value._id , index)}>Update</button>}</div>
+                                                                    <div class='float-left'>   {!value.edit ? <button className='btn btn-success btn-sm' onClick={() => edit(index)}><EditIcon/> </button> : <button class='btn btn-success btn-sm' onClick={() => updateRestaurant(value._id , index)}>Update</button>}</div>
                                                                   <div class='float-right'>
 
-                                                                    <button class='btn btn-outline-danger btn-sm' onClick={()=>deleteRestaurant(value._id)}> Delete</button>
+                                                                    <button className='btn' onClick={()=>deleteRestaurant(value._id)}> <DeleteIcon /></button>
                                                                   </div>
                                                                     </div>
                                                                 </div>

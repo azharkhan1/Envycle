@@ -15,6 +15,7 @@ import './css/jquery.mCustomScrollbar.min.css'
 import './css/flatpickr.min.css'
 
 
+
 // importing context
 import { useGlobalState } from "../context/index";
 
@@ -26,9 +27,69 @@ import url from "../core";
 // import components
 import Logout from '../components/logout';
 
-export default function AddRestaurant() {
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Paper from '@material-ui/core/Paper';
 
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
+  
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }))(TableRow);
+  
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+  
+  const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+  ];
+  
+  const useStyles = makeStyles({
+    table: {
+      minWidth: 700,
+    },
+  });
+
+export default function AddRestaurant() {
+    const classes = useStyles();
+    const [restaurants, setRestaurants] = React.useState([]);
+    const [change, handleChange] = React.useState();
     const globalState = useGlobalState();
+
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: `${url}/get-restaurants`
+        }).then((response) => {
+            setRestaurants(response.data.restaurants)
+            console.log('response is =>', response.data.restaurants);
+        }).catch((err) => {
+            alert('server error please refresh page or check internet');
+        })
+    }, [change])
 
     const AddRestaurant = (e) => {
         e.preventDefault();
@@ -45,6 +106,7 @@ export default function AddRestaurant() {
         }).then((response) => {
             console.log("response", response);
             alert('added succesfully');
+            handleChange(!change);
         }, (error) => {
             alert(error);
             console.log('error is=>', error);
@@ -53,7 +115,7 @@ export default function AddRestaurant() {
     }
 
     return (
-        <div className="wrapper">
+        <div >
                     <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div class='container'>
                     <a className="navbar-brand" href="#">{globalState.user.userName}</a>
@@ -83,68 +145,84 @@ export default function AddRestaurant() {
                     </div>
                 </div>
                 </nav>
-            <main>
-                <div className="main-section">
-                    <div className="container">
-                        <div className="main-section-data">
+                <div style={{height:'100vh',backgroundColor:'#08674bc3' }}>
+
+                    <div className="container mx-auto text-center ">
                             <div className="row">
-                                <div className="col-lg-3 col-md-4 pd-left-none no-pd">
-                                    <div className="main-left-sidebar no-margin">
-                                        <div className="user-data full-width">
-                                            <div className="user-profile">
-                                                <div className="username-dt">
-                                                    <div className="usr-pic">
-                                                    </div>
-                                                </div>
-                                                <div className="user-specs">
-                                                    <h3>Add Restaurant</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6 col-md-8 no-pd">
-                                    <div className="main-ws-sec">
+                                <div className="col-lg-12 col-md-12 no-pd">
+                                    <div className="main-ws-sec mt-4    ">
                                         <form onSubmit={AddRestaurant}>
                                             <div className="form-row align-items-center">
                                                 <div className="col-md-5">
-                                                    <input type="text" className="form-control mb-2" id="name" placeholder="Restaurant Name" />
+                                                    <input type="text" required  className="form-control mb-2" id="name" placeholder="Restaurant Name" />
                                                 </div>
                                                 <div className="col-md-5">
                                                     <div className="input-group mb-2">
-                                                        <input type="text" className="form-control" id="location" placeholder="Location" />
+                                                        <input type="text" required  className="form-control" id="location" placeholder="Location" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-5">
 
                                                     <div className="input-group mb-2">
-                                                        <input type="type" className="form-control" id="passcode" placeholder="Voucher passcode" />
+                                                        <input type="number" required  className="form-control" id="passcode" placeholder="Voucher passcode" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-5">
                                                     <div className="input-group mb-2">
-                                                        <input type="text" className="form-control" id="discount" placeholder="Discount to be given" />
+                                                        <input type="number" required  className="form-control" id="discount" placeholder="Discount to be given" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-5">
                                                     <div className="input-group mb-2">
-                                                        <input type="text" className="form-control" id="points" placeholder="Voucher points" />
+                                                        <input type="number" required className="form-control" id="points" placeholder="Voucher points" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-12 mx-auto ">
-                                                    <button type="submit" className="btn btn-primary mb-2">Add Restaurant</button>
+                                                    <button type="submit" className="btn btn-primary mb-2 add-btn">Add Restaurant</button>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
+                            </div>
+                            <div className='row'>
+                            <div style={{margin: '0 auto'}}>
+                <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Restaurant</StyledTableCell>
+            <StyledTableCell align="right">Location&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Passcode&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Discount&nbsp; </StyledTableCell>
+            <StyledTableCell align="right">Voucher Points&nbsp; </StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {restaurants.map((row) => (
+              <StyledTableRow key={row.name}>
+              <StyledTableCell component="th" scope="row">
+                {row.name}
+              </StyledTableCell>
+              <StyledTableCell align="right">{row.location}</StyledTableCell>
+              <StyledTableCell align="right">{row.passcode}</StyledTableCell>
+              <StyledTableCell align="right">{row.discount}</StyledTableCell>
+              <StyledTableCell align="right">{row.points} </StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
 
+                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </main>
-        </div>
+                
+          </div>
+            
+                
+          </div>
+    
 
     )
 }

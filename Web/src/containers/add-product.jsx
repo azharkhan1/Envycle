@@ -1,3 +1,4 @@
+  
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -26,10 +27,71 @@ import url from "../core";
 // import components
 import Logout from '../components/logout';
 
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Paper from '@material-ui/core/Paper';
+
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
+  
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }))(TableRow);
+  
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+  
+  const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+  ];
+  
+  const useStyles = makeStyles({
+    table: {
+      minWidth: 700,
+    },
+  });
+
 export default function AddProduct() {
+    const classes = useStyles();
 
     const globalState = useGlobalState();
+    var [materials, setMaterials] = useState([]);
 
+    useEffect(() => {
+
+        axios({
+            method: 'get',
+            url: `${url}/get-materials`
+        }).then((res) => {
+            console.log('', res.data.materials);
+            setMaterials(res.data.materials);
+        }).catch((err) => {
+            alert('some error occoured');
+        })
+
+    }, [])
     const addProduct = (e) => {
         console.log('url is=>',url);
         e.preventDefault();
@@ -89,22 +151,7 @@ export default function AddProduct() {
                     <div className="container">
                         <div className="main-section-data">
                             <div className="row">
-                                <div className="col-lg-3 col-md-4 pd-left-none no-pd">
-                                    <div className="main-left-sidebar no-margin">
-                                        <div className="user-data full-width">
-                                            <div className="user-profile">
-                                                <div className="username-dt">
-                                                    <div className="usr-pic">
-                                                    </div>
-                                                </div>
-                                                <div className="user-specs">
-                                                    <h3>Add New Materials</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6 col-md-8 no-pd">
+                                <div className="col-lg-12">
                                     <div className="main-ws-sec">
                                         <form onSubmit={addProduct}>
                                             <div className="form-row align-items-center">
@@ -117,10 +164,41 @@ export default function AddProduct() {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-12 mx-auto ">
-                                                    <button type="submit" className="btn btn-primary mb-2">Add Material</button>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                    <button type="submit" className="btn btn-primary mb-2 text-center mx-auto">Add Material</button>
                                                 </div>
                                             </div>
                                         </form>
+                                    </div>
+                                    <div>
+                                    <div className='row'>
+                            <div style={{margin: '0 auto'}}>
+                <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell align="right">Image Url&nbsp;</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {materials.map((row) => (
+              <StyledTableRow key={row.name}>
+          
+              <StyledTableCell align="left">{row.name}</StyledTableCell>
+              <StyledTableCell className='float-right' align="right"><img src={row.url} style={{width:100 , height:80}}/></StyledTableCell>
+            
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+                </div>
+                            </div>
+ 
                                     </div>
                                 </div>
 

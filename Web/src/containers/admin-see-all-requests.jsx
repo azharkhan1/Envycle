@@ -63,7 +63,7 @@ export default function AllRequests() {
                             <span className="navbar-toggler-icon" />
                         </button>
                         <div className="collapse navbar-collapse" id="navbarText">
-                            <ul className="navbar-nav mr-auto">
+                        <ul className="navbar-nav mr-auto">
                                 <li className="nav-item active">
                                     <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
                                 </li>
@@ -90,21 +90,6 @@ export default function AllRequests() {
                         <div className="container">
                             <div className="main-section-data" style={{ marginTop: '20px'}}>
                                 <div className="row">
-                                    {/* <div className="col-lg-3 col-md-4 pd-left-none no-pd">
-                                        <div className="main-left-sidebar no-margin">
-                                            <div className="user-data full-width">
-                                                <div className="user-profile">
-                                                    <div className="username-dt">
-                                                        <div className="usr-pic">
-                                                        </div>
-                                                    </div>
-                                                    <div className="user-specs">
-                                                        <h3>{globalState.user.userName}</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
                                     <div className="col-lg-12 col-md-8 no-pd">
                                         <div className="main-ws-sec">
                                             {/* <div className="post-topbar">
@@ -118,7 +103,7 @@ export default function AllRequests() {
                                                             <div key={index} className="card" style={{ margin: '20px auto' }}>
                                                                 <div className="card-body">
                                                                     <div class='text-center mb-5'>
-                                                                        <h3>Status {status}</h3>
+                                                                        <h3 >Status:  <span style={status==='Confirmed' ? {color:'#3bb33b'} : {color:'red'}}>{status}</span>  </h3>
                                                                     </div>
                                                                     <div>
                                                                         <span>Email : </span>
