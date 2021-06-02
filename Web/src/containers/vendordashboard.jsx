@@ -172,8 +172,8 @@ export default function VendorDashboard() {
                                                                     }
                                                                     {remarks ? <div className='text-center'><small>Remarks: {remarks}</small></div> : ''}
                                                                     <div className='text-center mt-4'>
-                                                                        <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3  text-center">Accept Order</button>
-                                                                        <button onClick={() => declineOrder(index)} className="btn btn-danger ml-3 text-center">Decline Order</button>
+                                                                        <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3  text-center">Accept Request</button>
+                                                                        <button onClick={() => declineOrder(index)} className="btn btn-danger ml-3 text-center">Decline Request</button>
 
                                                                     </div>
 

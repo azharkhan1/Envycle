@@ -33,7 +33,7 @@ export default function MyRequests() {
             url: `${url}/get-restaurants`
         }).then((response) => {
             setRestaurants(response.data.restaurants)
-            console.log('response is =>', response.data.restaurants);
+            // console.log('response is =>', response.data.restaurants);
         }).catch((err) => {
             alert('server error please refresh page or check internet');
         })
@@ -64,7 +64,6 @@ export default function MyRequests() {
 
     return (
         <div>
-           
            <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className='container'>
                         <a className="navbar-brand" href="#">{globalState.user.userName}</a>
@@ -89,7 +88,6 @@ export default function MyRequests() {
                     </div>
                 </nav>
                     <div className='section'>
-
                     <div class='container '>
                     <div class='row'>
 
@@ -97,7 +95,7 @@ export default function MyRequests() {
                         restaurants.map(({ name, location, passcode, discount, points, _id }, index) => {
                             return    <div class='col-md-4 col-sm-12 mt-5'>
                          
-                            <div key={index} className="card mx-auto px-2 py-2 mb-3" style={{ width: '18rem' }}>
+                            <div key={index} className="card mx-auto mb-3" >
                                 <div className="card-body ">
                                     <div className='mt-2  px-2 py-2'>
                                         <span className="float-left">Name: </span> <span className="float-right">{name}</span>
@@ -105,6 +103,9 @@ export default function MyRequests() {
                                     <hr />
                                     <div className='mb-2  px-2 py-2'>
                                         <span className="">Location: </span> <span className="float-right">{location}</span>
+                                    </div>
+                                    <div className='mb-2  px-2 py-2'>
+                                        <span className="">Discount: </span> <span className="float-right">{discount}%</span>
                                     </div>
                                     <div>
                                         <p className='font-weight-bold text-center'>{parseInt(globalState.user.points) >= points ? `DISCLAIMER : To avail the voucher visit ${name} they will enter passcode for discount` : `Points required ${points}`}</p>
