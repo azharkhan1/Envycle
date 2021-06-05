@@ -4,7 +4,7 @@ import "./css/app.css";
 import './css/line-awesome.css'
 import './css/style.css'
 import './css/responsive.css'
-import { Link } from "react-router-dom";
+import { Link , useHistory} from "react-router-dom";
 import url from "../core/index";
 import axios from "axios";
 import aboutus from './images/aboutus-img.png'
@@ -26,7 +26,7 @@ function Signin() {
 
     const setGlobalState = useGlobalStateUpdate();
     const [message ,setMessage] = useState();
-
+    const history = useHistory();
     var email = useRef();
     var password = useRef();
 
@@ -40,6 +40,8 @@ function Signin() {
                 userPassword: password.current.value,
             },
         }).then((response) => {
+           console.log('user ',response.data.user.userEmail);
+           history.push('/')
             setGlobalState(prev => ({
                 ...prev, loginStatus: true, user: {
                     userEmail: response.data.user.userEmail,

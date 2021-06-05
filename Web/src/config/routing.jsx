@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import Home from '../components/Home/Home.jsx'
+
 
 import Signin from "../containers/signin"
 import Signup from "../containers/signup"
@@ -17,6 +17,7 @@ import RedeemVoucher from '../containers/redeem-voucher';
 import AddRestaurant from '../containers/vendor-restaurants';
 import EditRestaurant from '../containers/edit-restaurant';
 import AllRequests from '../containers/admin-see-all-requests';
+import Home from '../components/Home/Home.jsx';
 // Improrting Global context
 import { useGlobalState } from '../context/index';
 import AddProduct from "../containers/add-product";
@@ -72,7 +73,7 @@ export default function AppRouter() {
 
         <>
           <Switch>
-            <Route exact path="/">
+            <Route exact={true} path="/">
               <VendorDashboard />
             </Route>
             <Route path="/add-restaurant">

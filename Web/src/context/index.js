@@ -30,6 +30,7 @@ export function GlobalStateProvider({ children }) {
             method: 'get',
             url: url + "/profile",
         }).then((response) => {
+            console.log('context user profile', response.data.profile)
                 setData(prev => ({ ...prev, loginStatus: true , user : response.data.profile , role : response.data.profile.role }));
         }, (error) => {
             setData(prev => ({ ...prev, loginStatus: false , user : null , role : null}))

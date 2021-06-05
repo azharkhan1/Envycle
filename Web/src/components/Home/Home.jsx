@@ -1,8 +1,9 @@
 import React from 'react'
 import aboutImg from '../../containers/images/aboutus-img.png'
-import { HashLink as Link } from 'react-router-hash-link';
+import { HashLink  } from 'react-router-hash-link';
 import '../../containers/css2/style.css'
 import '../../containers/css2/responsive.css'
+import { Link } from "react-router-dom";
 
 export default function Home() {
     return (
@@ -26,17 +27,18 @@ export default function Home() {
                         <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav mr-auto px-2">
                                     <li className="nav-item px-2">
-                                        <Link className="nav-link " to="/">HOME<span className="sr-only">(current)</span></Link>
+                                        <HashLink className="nav-link " to="/">HOME<span className="sr-only">(current)</span></HashLink>
                                     </li>
                                     <li href="#aboutus">
-                                        <Link className="nav-link" to="#aboutus">ABOUT US</Link>
+                                        <HashLink className="nav-link" to="#aboutus">ABOUT US</HashLink>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="#footer">CONTACT US</Link>
+                                        <HashLink className="nav-link" to="#footer">CONTACT US</HashLink>
                                     </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/signin">SIGN IN</Link>
+                                    <li style={{color:'rgba(0, 0, 0, .5)'}} className="nav-item">
+                                    <Link style={{color:'rgba(0, 0, 0, .5)'}} className="nav-item" to="/signin">SIGN IN </Link>
                                     </li>
+                                    
                                 </ul>
                         </div>
                     </div>

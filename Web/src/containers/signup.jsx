@@ -46,7 +46,7 @@ export default function Signup() {
             console.log("response", response);
             setMessage('Signed up successfully');
 
-            // alert(response.data.message);
+            //
 
         }, (error) => {
             // alert(error.response.data.message);
