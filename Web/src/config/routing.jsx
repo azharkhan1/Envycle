@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-
+import Home from '../components/Home/Home.jsx'
 
 import Signin from "../containers/signin"
 import Signup from "../containers/signup"
@@ -34,6 +34,9 @@ export default function AppRouter() {
         <>
           <Switch>
             <Route exact={true} path="/">
+              <Home />
+            </Route>
+            <Route path="/signin">
               <Signin />
             </Route>
             <Route path="/signup">

@@ -7,6 +7,7 @@ import './css/style.css'
 import { Link } from "react-router-dom";
 import url from "../core/index";
 import axios from 'axios';
+import aboutus from './images/aboutus-img.png'
 
 export default function Signup() {
 
@@ -71,14 +72,14 @@ export default function Signup() {
                                             {/* <p> Signup
                                                    </p> */}
                                         </div>
-                                        <img src={hamaraImage} alt="" />
+                                        <img src={aboutus} alt="" />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="login-sec">
                                         <ul className="sign-control">
                                             {/* <li data-tab="tab-1" ><a href="#" title="">Sign in</a></li> */}
-                                            <li> <Link to="/">Sigin </Link></li>
+                                            <li> <Link to="/signin">Sigin </Link></li>
                                             <li data-tab="tab-2" className="current"><Link to="/signup">Signup </Link></li>
                                         </ul>
 

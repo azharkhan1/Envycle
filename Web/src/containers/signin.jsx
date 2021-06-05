@@ -7,6 +7,7 @@ import './css/responsive.css'
 import { Link } from "react-router-dom";
 import url from "../core/index";
 import axios from "axios";
+import aboutus from './images/aboutus-img.png'
 
 
 
@@ -63,16 +64,16 @@ function Signin() {
                                     <div className="cmp-info">
                                         <div className="cm-logo">
                                             <img src="" alt="" />
-                                            <p> Envycle, Recycle your materials through our application
+                                            <p> <b>Recycle your materials through our application</b>
                                                    </p>
                                         </div>
-                                        <img src={hamaraImage} alt="" />
+                                        <img src={aboutus} alt="" />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="login-sec">
                                         <ul className="sign-control">
-                                            <li data-tab="tab-1" className="current"><Link to="/">Sign in </Link></li>
+                                            <li data-tab="tab-1" className="current"><Link to="/signin">Sign in </Link></li>
                                             <li> <Link to="/signup">Signup </Link> </li>
                                         </ul>
 
