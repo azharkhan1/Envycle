@@ -44,13 +44,13 @@ export default function Signup() {
             },
         }).then((response) => {
             console.log("response", response);
-            setMessage('Signed up successfully');
+            alert('Signed up successfully');
 
             //
 
         }, (error) => {
             // alert(error.response.data.message);
-            setMessage(error.response.data.message)
+            alert(error.response.data.message)
         })
     }
 
