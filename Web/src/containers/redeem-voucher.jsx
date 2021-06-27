@@ -66,7 +66,8 @@ export default function MyRequests() {
         <div>
            <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className='container'>
-                        <a className="navbar-brand" href="#">{globalState.user.userName}</a>
+                    <Link className="navbar-brand" to='/'>{globalState.user.userName}</Link>
+
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon" />
                         </button>
@@ -112,7 +113,7 @@ export default function MyRequests() {
                                     </div>
                                     <div className='mx-auto text-center'>
                                         {globalState.user.points >= points ? <input style={{ outline: 'none', borderBottom: '2px solid #007bff', borderTop: 0, borderLeft: 0, borderRight: 0, }} className='w-100 mb-2 px-2 py-1' id="passcode" placeholder='Restaurant passcode' /> : null}
-                                        <button style={{ display: 'block', width: '100%' }} className=' mt-2 text-center mx-auto w-100 ' onClick={globalState.user.points >= points ? () => redeem(_id, index) : () => { return }} className="btn btn-primary">{parseInt(globalState.user.points) >= points ? `Reddem ${name} Voucher` : `Need ${points - globalState.user.points} Point to Redeem`}</button>
+                                        <button style={{ display: 'block', width: '100%', backgroundColor:'#014732' }} className=' mt-2 text-center mx-auto w-100 ' onClick={globalState.user.points >= points ? () => redeem(_id, index) : () => { return }} className="btn btn-primary">{parseInt(globalState.user.points) >= points ? `Reddem ${name} Voucher` : `Need ${points - globalState.user.points} Point to Redeem`}</button>
                                     </div>
                                 </div>
                                 </div>

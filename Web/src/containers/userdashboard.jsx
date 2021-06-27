@@ -41,7 +41,6 @@ axios.defaults.withCredentials = true
 export default function UserDashboard() {
 
     const globalState = useGlobalState();
-    console.log('global state drawer is',globalState);
     var [products, setProducts] = useState([]);
     var [cart, setCart] = useState([]);
     var [change, setChange] = useState(true);
@@ -58,7 +57,6 @@ export default function UserDashboard() {
             method: 'get',
             url: `${url}/get-materials`
         }).then((res) => {
-            console.log('', res.data.materials);
             setProducts(res.data.materials);
         }).catch((err) => {
             alert('some error occoured');
@@ -157,7 +155,6 @@ export default function UserDashboard() {
             },
 
         }).then((response) => {
-            console.log("response is = > ", response.data);
             setMessage("Your request has been placed");
             document.getElementById('order-message').style.color = 'black';
 
@@ -167,7 +164,6 @@ export default function UserDashboard() {
             });
 
         }, (error) => {
-            console.log("an error occured");
         })
         products.map((value) => value.added = false);
     }
@@ -179,7 +175,7 @@ export default function UserDashboard() {
             <div className="wrapper">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className='container'>
-                        <a className="navbar-brand" href="#">{globalState.user.userName}</a>
+                    <Link className="navbar-brand" to='/'>{globalState.user.userName}</Link>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon" />
                         </button>
@@ -215,8 +211,8 @@ export default function UserDashboard() {
                                                 <div className="row">
                                                     {
                                                         products.map((value, index) => {
-                                                            return <div class='col-md-6'>
-                                                                <div key={index} className="card  mt-2 mx-auto text-center px-4 py-4" style={{ width: "15rem" }} >
+                                                            return <div className='col-md-6' key={index}>
+                                                                <div  className="card  mt-2 mx-auto text-center px-4 py-4" style={{ width: "15rem" }} >
                                                                     <img src={value.url} className="material" alt="..." />
                                                                     <div className="card-body">
                                                                         <div className="gradient-img">
@@ -245,8 +241,8 @@ export default function UserDashboard() {
                                                         {
 
                                                             cart.map((value, index) => {
-                                                                return <div class="card-body" key={index}>
-                                                                    <h5 class="card-title">{value.product} (kg)</h5>
+                                                                return <div className="card-body" key={index}>
+                                                                    <h5 className="card-title">{value.product} (kg)</h5>
 
                                                                     <div className="quantity buttons_added">
                                                                         <input onClick={value.quantity > 0 ? (e) => removeQty(index) : () => { return }} type="button" defaultValue="-" className="minus" />

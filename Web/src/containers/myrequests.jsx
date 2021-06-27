@@ -56,7 +56,7 @@ export default function MyRequests() {
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light mb-5">
                 <div className='container'>
-                    <a className="navbar-brand" href="#">{globalState.user.userName}</a>
+                    <Link className="navbar-brand" to='/'>{globalState.user.userName}</Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
                     </button>
@@ -83,8 +83,8 @@ export default function MyRequests() {
                     {
                         orders.map(({ cart, total, phoneNo, address, status, _id }, index) => {
                             return (
-                                <div className='col-md-4 col-sm-12 '>
-                                    <div key={index} className="card-body mb-4" style={{ boxShadow: "0 0 6px grey", height: '300px' }}>
+                                <div key={index} className='col-md-4 col-sm-12 '>
+                                    <div  className="card-body mb-4" style={{ boxShadow: "0 0 6px grey", height: '300px' }}>
                                         <div className='mt-2 px-2 py-2'>
                                             <span className='float-left heading' >Status:</span> <span className={status === 'Pending' ? 'text-warning float-right' : status === 'Declined' ? 'text-danger float-right' : 'text-success float-right'}>{status}</span>
                                         </div>

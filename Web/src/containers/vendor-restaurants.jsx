@@ -170,7 +170,7 @@ export default function AddRestaurant() {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-12 mx-auto ">
-                                                    <button type="submit" className="btn btn-primary mb-2 add-btn">Add Restaurant</button>
+                                                    <button type="submit" className="btn  mb-2 add-btn" style={{    backgroundColor:'#014732' , color:'white'}}>Add Restaurant</button>
                                                 </div>
                                             </div>
                                         </form>

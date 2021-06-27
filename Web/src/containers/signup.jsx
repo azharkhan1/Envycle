@@ -67,10 +67,10 @@ export default function Signup() {
                             <div className="row">
                                 <div className="col-lg-6">
                                     <div className="cmp-info">
-                                        <div className="cm-logo">
+                                    <div className="cm-logo">
                                             <img src="" alt="" />
-                                            {/* <p> Signup
-                                                   </p> */}
+                                            <p> <b>Recycle your materials through our application</b>
+                                                   </p>
                                         </div>
                                         <img src={aboutus} alt="" />
                                     </div>
@@ -124,7 +124,7 @@ export default function Signup() {
 
                                                         <div className="col-lg-12 no-pdd">
                                                             <div className="sn-field">
-                                                                <input required ref={password} autoComplete="on" type="password" name="password" placeholder="Password" />
+                                                                <input required ref={password} autoComplete="on" type="password" name="password" placeholder="Password" minLength={6} maxLength={200}/>
                                                                 <i className="la la-lock"></i>
                                                             </div>
                                                         </div>

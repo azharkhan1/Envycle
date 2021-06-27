@@ -159,7 +159,7 @@ export default function AddProduct() {
                                                     <div>
                                                         
                                                     </div>
-                                                    <button type="submit" className="btn btn-primary mb-2 text-center mx-auto">Add Material</button>
+                                                    <button type="submit" className="btn mb-2 text-center mx-auto" style={{    backgroundColor:'#014732' , color:'white'}}>Add Material</button>
                                                 </div>
                                             </div>
                                         </form>

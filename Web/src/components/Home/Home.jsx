@@ -35,8 +35,8 @@ export default function Home() {
                                     <li className="nav-item">
                                         <HashLink className="nav-link" to="#footer">CONTACT US</HashLink>
                                     </li>
-                                    <li style={{color:'rgba(0, 0, 0, .5)'}} className="nav-item">
-                                    <Link style={{color:'rgba(0, 0, 0, .5)'}} className="nav-item" to="/signin">SIGN IN </Link>
+                                    <li className="nav-item">
+                                        <HashLink className="nav-link" to="/signin">SIGN IN</HashLink>
                                     </li>
                                     
                                 </ul>
