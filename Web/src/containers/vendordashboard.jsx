@@ -31,6 +31,8 @@ export default function VendorDashboard() {
             method: 'get',
             url: `${url}/getOrders`,
         }).then((response) => {
+            console.log(response.data.placedRequests)
+
             response.data.placedRequests.map((value) => {
                 if (value.status === 'Pending') {
                     arr.push(value);
@@ -41,7 +43,7 @@ export default function VendorDashboard() {
             console.log("an error occured");
         })
         socket.on('requests', (data) => {
-            console.log('data is',data);
+            console.log('data is', data);
             setRealTime(!realTime);
         })
     }, [realTime])
@@ -57,7 +59,7 @@ export default function VendorDashboard() {
             },
 
         }).then((res) => {
-            alert('Order confirmed');
+            alert('Request confirmed');
             setRealTime(!realTime);
         }).catch((err) => {
             console.log("error is=>", err);
@@ -83,7 +85,7 @@ export default function VendorDashboard() {
     return (
         <div>
             <div className="wrapper">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div class='container'>
                         <a className="navbar-brand" href="#">{globalState.user.userName}</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +119,7 @@ export default function VendorDashboard() {
                         <div className="container">
                             <div className="main-section-data">
                                 <div className="row">
-                                   
+
                                     <div className="col-lg-12 col-md-8 no-pd">
                                         <div className="main-ws-sec">
                                             {/* <div className="post-topbar">
@@ -125,73 +127,73 @@ export default function VendorDashboard() {
                                             </div> */}
                                             <div>
                                                 <div className='row'>
-                                                {
-                                                    orders.length>0 ?
-                                                    orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks }, index) => {
-                                                        return (
-                                                            <div key={index} className='col-md-6'>
-                                                            <div className="card" style={{ width: 'rem', margin: '10px auto' }}>
-                                                                <div className="card-body">
+                                                    {
+                                                        orders.length > 0 ?
+                                                            orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks }, index) => {
+                                                                return (
+                                                                    <div key={index} className='col-md-6'>
+                                                                        <div className="card" style={{ width: 'rem', margin: '10px auto' }}>
+                                                                            <div className="card-body">
+                                                                                <div>
+                                                                                    <span>Email : </span>
+                                                                                    <span className='float-right'>{userEmail}</span>
+                                                                                </div>
+                                                                                <hr />
+                                                                                <div className='mt-3 mb-1'>
+                                                                                    <span >Phone : </span>
+                                                                                    <span className='float-right'>{phoneNo}</span>
+                                                                                </div>
+                                                                                <hr />
+                                                                                <div className='mt-3'>
+                                                                                    <span>Address : </span>
+                                                                                    <span className='float-right'>{address}</span>
+                                                                                </div>
+                                                                                <hr />
+
+
+                                                                                {
+                                                                                    cart.map((cartVal, i) => {
+                                                                                        return <ul key={i}>
+                                                                                            <li>
+                                                                                                <div className='mt-2'>
+                                                                                                    <span className="card-title">Material : </span>
+                                                                                                    <span className='float-right'>{cartVal.product || cartVal.name}  {cartVal.quantity} kg</span>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    })
+
+                                                                                }
+                                                                                {remarks ? <div className='text-center'><small>Remarks: {remarks}</small></div> : ''}
+                                                                                <div className='text-center mt-4'>
+                                                                                    <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3  text-center">Accept Request</button>
+                                                                                    <button onClick={() => declineOrder(index)} className="btn btn-danger ml-3 text-center">Decline Request</button>
+
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            })
+
+
+                                                            : <div className='card text-center'>
+                                                                <div className='card-body'>
                                                                     <div>
-                                                                        <span>Email : </span>
-                                                                        <span className='float-right'>{userEmail}</span>
+                                                                        <h2>
+                                                                            0 requests
+                                                                        </h2>
                                                                     </div>
-                                                                    <hr />
-                                                                    <div className='mt-3 mb-1'>
-                                                                        <span >Phone : </span>
-                                                                        <span className='float-right'>{phoneNo}</span>
-                                                                    </div>
-                                                                    <hr />
-                                                                    <div className='mt-3'>
-                                                                        <span>Address : </span>
-                                                                        <span className='float-right'>{address}</span>
-                                                                    </div>
-                                                                    <hr />
-
-
-                                                                    {
-                                                                        cart.map((cartVal, i) => {
-                                                                            return <ul key={i}>
-                                                                                <li>
-                                                                                    <div className='mt-2'>
-                                                                                        <span className="card-title">Product : </span>
-                                                                                        <span className='float-right'>{cartVal.product}  {cartVal.quantity} kg</span>
-                                                                                    </div>
-                                                                                </li>
-                                                                            </ul>
-                                                                        })
-                                                                        
-                                                                    }
-                                                                    {remarks ? <div className='text-center'><small>Remarks: {remarks}</small></div> : ''}
-                                                                    <div className='text-center mt-4'>
-                                                                        <button onClick={() => confirmOrder(index)} className="btn btn-primary ml-3  text-center">Accept Request</button>
-                                                                        <button onClick={() => declineOrder(index)} className="btn btn-danger ml-3 text-center">Decline Request</button>
-
-                                                                    </div>
-
                                                                 </div>
-                                                            </div>
-                                                                    </div>
-                                                        )
-                                                    })
-                                                    
-                                                    
-                                                    : <div className='card text-center'>
-                                                <div className='card-body'>
-                                                    <div>
-                                                        <h2>
-                                                            0 requests
-                                                        </h2>
-                                                    </div>
-                                                    </div>
 
-                                               </div> }
+                                                            </div>}
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                                   </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

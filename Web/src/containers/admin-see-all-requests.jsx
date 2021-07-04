@@ -16,7 +16,7 @@ import './css/flatpickr.min.css'
 
 
 // importing context
-import { useGlobalState, useGlobalStateUpdate } from "../context/index";
+import { useGlobalState } from "../context/index";
 
 // importing url 
 import url from "../core";
@@ -34,23 +34,22 @@ export default function AllRequests() {
     const [orders, setOrders] = useState([]);
     const [realTime, setRealTime] = useState(false);
     useEffect(() => {
-        let arr = [];
         axios({
             method: 'get',
             url: `${url}/getOrders`,
         }).then((response) => {
-          
+            console.log(response.data.placedRequests)
             setOrders(response.data.placedRequests);
         }, (error) => {
             console.log("an error occured");
         })
         socket.on('requests', (data) => {
-            console.log('data is',data);
+            console.log('data is', data);
             setRealTime(!realTime);
         })
     }, [realTime])
 
-    
+
 
 
     return (
@@ -63,7 +62,7 @@ export default function AllRequests() {
                             <span className="navbar-toggler-icon" />
                         </button>
                         <div className="collapse navbar-collapse" id="navbarText">
-                        <ul className="navbar-nav mr-auto">
+                            <ul className="navbar-nav mr-auto">
                                 <li className="nav-item active">
                                     <Link to='/'><a className="nav-link" >Home <span className="sr-only">(current)</span></a></Link>
                                 </li>
@@ -85,25 +84,25 @@ export default function AllRequests() {
                         </div>
                     </div>
                 </nav>
-                
-                    <div className="main-section">
-                        <div className="container">
-                            <div className="main-section-data" style={{ marginTop: '20px'}}>
-                                <div className="row">
-                                    <div className="col-lg-12 col-md-8 no-pd">
-                                        <div className="main-ws-sec">
-                                            {/* <div className="post-topbar">
+
+                <div className="main-section">
+                    <div className="container">
+                        <div className="main-section-data" style={{ marginTop: '20px' }}>
+                            <div className="row">
+                                <div className="col-lg-12 col-md-8 no-pd">
+                                    <div className="main-ws-sec">
+                                        {/* <div className="post-topbar">
 
                                             </div> */}
-                                            <div className='row'>
-                                                {
-                                                    orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks , status}, index) => {
-                                                        return (
-                                                            <div className='col-md-6'>
+                                        <div className='row'>
+                                            {
+                                                orders.reverse().map(({ cart, userEmail, total, phoneNo, address, remarks, status }, index) => {
+                                                    return (
+                                                        <div className='col-md-6'>
                                                             <div key={index} className="card" style={{ margin: '20px auto' }}>
                                                                 <div className="card-body">
                                                                     <div class='text-center mb-5'>
-                                                                        <h3 >Status:  <span style={status==='Confirmed' ? {color:'#3bb33b'} : {color:'red'}}>{status}</span>  </h3>
+                                                                        <h3 >Status:  <span style={status === 'Confirmed' ? { color: '#3bb33b' } : { color: 'red' }}>{status}</span>  </h3>
                                                                     </div>
                                                                     <div>
                                                                         <span>Email : </span>
@@ -133,27 +132,27 @@ export default function AllRequests() {
                                                                                 </li>
                                                                             </ul>
                                                                         })
-                                                                        
+
                                                                     }
                                                                     {remarks ? <div className='text-center'><small>Remarks: {remarks}</small></div> : ''}
-                                                             
+
 
                                                                 </div>
                                                             </div>
-                                                                    </div>
-                                                        )
-                                                    })
-                                                }
+                                                        </div>
+                                                    )
+                                                })
+                                            }
 
-                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
+
                             </div>
                         </div>
                     </div>
-            
+                </div>
+
             </div>
         </div>
     )
