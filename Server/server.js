@@ -350,6 +350,7 @@ app.patch('/confirmOrder', (req, res, next) => {
                                     res.send({
                                         message: 'Points updated succesfully!',
                                     })
+                                    io.emit('points', 'updated points')
                                 }
                                 else {
                                     res.status(501).send({
