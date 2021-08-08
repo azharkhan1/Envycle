@@ -21,7 +21,7 @@ export const useGlobalStateUpdate = () => useContext(GlobalStateUpdateContext)
 export function GlobalStateProvider({ children }) {
     const [points, setPoints] = useState(true)
     socket.on('points', (data) => {
-        setPoints(points)
+        setPoints(!points)
         console.log('its running check', data)
     })
     const [data, setData] = useState({
@@ -36,6 +36,7 @@ export function GlobalStateProvider({ children }) {
             url: url + "/profile",
         }).then((response) => {
             setData(prev => ({ ...prev, loginStatus: true, user: response.data.profile, role: response.data.profile.role }));
+            console.log(response.data)
         }, (error) => {
             setData(prev => ({ ...prev, loginStatus: false, user: null, role: null }))
         });
