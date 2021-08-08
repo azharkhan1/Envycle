@@ -178,7 +178,7 @@ app.delete('/delete-order', (req, res) => {
             res.status(200).send({
                 message: 'Request canceled succesfully'
             })
-            io.emit('requests','cancelled');
+            io.emit('requests', 'cancelled');
         }
         else {
             res.status(500).send({
@@ -348,8 +348,7 @@ app.patch('/confirmOrder', (req, res, next) => {
                             user.updateOne({ points: user.points + data.quantity }, {}, (err, pointsUpdate) => {
                                 if (!err) {
                                     res.send({
-                                        message: 'points updated succesfully',
-
+                                        message: 'Points updated succesfully!',
                                     })
                                 }
                                 else {
@@ -392,7 +391,7 @@ app.patch('/declineOrder', (req, res, next) => {
                             res.send({
                                 message: 'order has been declined',
                             })
-                          io.emit("requests" , 'declined order');
+                            io.emit("requests", 'declined order');
                         }
                         else {
                             res.status(501).send({
@@ -513,26 +512,26 @@ app.get('/get-restaurants', (req, res, next) => {
 })
 
 app.post('/update-restaurant', (req, res, next) => {
-    
-    restaurantModel.findById({_id : req.body.id}, (err, data) => {
+
+    restaurantModel.findById({ _id: req.body.id }, (err, data) => {
         if (!err) {
             data.updateOne(
                 {
-                    name : req.body.name , 
-                    location : req.body.location,
-                    discount : req.body.discount,
-                    passcode : req.body.passcode,
+                    name: req.body.name,
+                    location: req.body.location,
+                    discount: req.body.discount,
+                    passcode: req.body.passcode,
                     points: req.body.points,
                 }
-                ).then((updated)=>{
-                    res.status(200).send({
-                        message : 'succesfully updated'
-                    })
-                }).catch((err)=>{
-                    res.status(500).send({
-                        message : 'some error occured'
-                    })
+            ).then((updated) => {
+                res.status(200).send({
+                    message: 'succesfully updated'
                 })
+            }).catch((err) => {
+                res.status(500).send({
+                    message: 'some error occured'
+                })
+            })
         }
         else {
             res.status(501).send({
@@ -542,21 +541,20 @@ app.post('/update-restaurant', (req, res, next) => {
     })
 })
 
-app.delete('/delete-restaurant' , (req,res)=>{
+app.delete('/delete-restaurant', (req, res) => {
 
-    restaurantModel.findById({_id : req.body.id} , (err,restaurant)=>{
-       if (!err)
-       {
-           restaurant.remove()
-           res.status(200).send({
-               message : 'succesfully removed'
-           })
-       }
-       else{
-           res.status(500).send({
-               message : 'some error occoured'
-           })
-       }
+    restaurantModel.findById({ _id: req.body.id }, (err, restaurant) => {
+        if (!err) {
+            restaurant.remove()
+            res.status(200).send({
+                message: 'succesfully removed'
+            })
+        }
+        else {
+            res.status(500).send({
+                message: 'some error occoured'
+            })
+        }
     })
 })
 

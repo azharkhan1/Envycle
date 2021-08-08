@@ -15,7 +15,7 @@ api.post("/signup", (req, res, next) => {
     if (!req.body.userEmail
         || !req.body.userPassword
         || !req.body.userName
-    
+
     ) {
         res.status(403).send(`
             please send name, email, passwod and gender in json body.
@@ -37,9 +37,9 @@ api.post("/signup", (req, res, next) => {
                         userEmail: req.body.userEmail,
                         userPassword: hashPassword,
                         userName: req.body.userName,
-                        gender : req.body.gender,
-                        points : 0,
-                        role : 'user',
+                        gender: req.body.gender,
+                        points: 0,
+                        role: 'user',
                     });
 
                     newUser.save((err, data) => {
@@ -97,8 +97,8 @@ api.post("/login", (req, res, next) => {
                             userEmail: user.userEmail,
                             userName: user.userName,
                             userPassword: user.userPassword,
-                            role : user.role,
-                            points : user.points,
+                            role: user.role,
+                            points: user.points,
                         }, SERVER_SECRET)
 
                     res.cookie('jToken', token, {
@@ -111,8 +111,8 @@ api.post("/login", (req, res, next) => {
                         user: {
                             userEmail: user.userEmail,
                             userName: user.userName,
-                            role : user.role,
-                            points : user.points,
+                            role: user.role,
+                            points: user.points,
                         },
                         token: token,
                     })
@@ -159,20 +159,20 @@ api.post("/forget-password", (req, res, next) => {
                     userEmail: req.body.userEmail,
                     otp: otp
                 }).then((doc) => {
-                    console.log("Otp created=>> ", doc);
                     client.sendEmail({
-                        "From": "mudassir_student@sysborg.com",
+                        "From": 'info@envycle.com',
                         "To": req.body.userEmail,
                         "Subject": "Reset your password",
                         "TextBody": `Here is your pasword reset code: ${otp}`
                     }).then((status) => {
-
                         console.log("status: ", status);
                         res.status(200).send(
                             {
                                 message: "email sent with otp"
                             }
                         )
+                    }).catch((err) => {
+                        console.log(err);
                     })
                 }).catch((err) => {
                     console.log("error in creating otp: ", err);

@@ -7,6 +7,7 @@ import './css/responsive.css'
 import { Link, useHistory } from "react-router-dom";
 import url from "../core/index";
 import axios from "axios";
+import aboutus from './images/aboutus-img.png'
 
 
 
@@ -33,7 +34,7 @@ function ForgotPassword() {
             url: `${url}/auth/forget-password`,
             data: {
                 userEmail: email.current.value,
-              
+
             },
         }).then((response) => {
             alert('check your email');
@@ -53,14 +54,14 @@ function ForgotPassword() {
     }
     function setPassword(e) {
         e.preventDefault();
-        console.log('forgot email=>',forgotEmail);
+        console.log('forgot email=>', forgotEmail);
         axios({
             method: 'post',
             url: url + "/auth/forget-password-step-2",
             data: {
                 userEmail: forgotEmail,
-                otp : otp.current.value,
-                newPassword : passwordText.current.value,
+                otp: otp.current.value,
+                newPassword: passwordText.current.value,
             },
         }).then((response) => {
             history.push("/");
@@ -84,10 +85,10 @@ function ForgotPassword() {
                                     <div className="cmp-info">
                                         <div className="cm-logo">
                                             <img src="" alt="" />
-                                            <p> We Deal in Electronic items
-                                                   </p>
-                                            <img src={hamaraImage} alt="" />
+                                            <p> <b>Recycle your materials through our application</b>
+                                            </p>
                                         </div>
+                                        <img src={aboutus} alt="" />
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
@@ -155,7 +156,7 @@ function ForgotPassword() {
 
                     </div>
                 </div>
-        
+
 
             </div>
         </div>
