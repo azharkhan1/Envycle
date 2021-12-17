@@ -105,7 +105,7 @@ api.post("/login", (req, res, next) => {
                         maxAge: 86_400_000,
                         httpOnly: true,
                         sameSite:'none',
-                        secure:false,
+                        secure:true,
                     });
 
                     res.status(200).send({

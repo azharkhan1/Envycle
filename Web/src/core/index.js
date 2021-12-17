@@ -1,11 +1,4 @@
-var url = window.location.href.split(":");
-if (url[0]==="https")
-{
-    url = 'https://envycle.herokuapp.com'
-}
-else{
-    url = "http://localhost:5000"
-}
+var url ='https://envycle.herokuapp.com'
 
 export default url;
 
