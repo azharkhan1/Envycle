@@ -67,7 +67,8 @@ app.use(function (req, res, next) {
                 }, SERVER_SECRET)
                 res.cookie('jToken', token, {
                     maxAge: 86_400_000,
-                    httpOnly: true
+                    httpOnly: true,
+                    sameSite:'none',
                 });
                 req.body.jToken = decodedData;
                 req.headers.jToken = decodedData;
