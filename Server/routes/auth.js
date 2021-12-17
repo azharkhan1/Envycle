@@ -104,8 +104,6 @@ api.post("/login", (req, res, next) => {
                     res.cookie('jToken', token, {
                         maxAge: 86_400_000,
                         httpOnly: true,
-                        sameSite:'none',
-                        secure:true,
                     });
 
                     res.status(200).send({

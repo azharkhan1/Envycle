@@ -34,7 +34,6 @@ app.use(bodyParser.json());
 app.use(cors({
     origin: ["http://localhost:3000", 'https://envycle.herokuapp.com'],
     credentials: true,
-    exposedHeaders:['set-cookie']
 }));
 
 
@@ -70,8 +69,6 @@ app.use(function (req, res, next) {
                 res.cookie('jToken', token, {
                     maxAge: 86_400_000,
                     httpOnly: true,
-                    sameSite:'none',
-                    secure:true,
                 });
                 req.body.jToken = decodedData;
                 req.headers.jToken = decodedData;
