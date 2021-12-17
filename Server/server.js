@@ -70,7 +70,7 @@ app.use(function (req, res, next) {
                     maxAge: 86_400_000,
                     httpOnly: true,
                     sameSite:'none',
-                    secure:false,
+                    secure:true,
                 });
                 req.body.jToken = decodedData;
                 req.headers.jToken = decodedData;
