@@ -34,6 +34,7 @@ app.use(bodyParser.json());
 app.use(cors({
     origin: ["http://localhost:3000", 'https://envycle.herokuapp.com'],
     credentials: true,
+    exposedHeaders: ["set-cookie"]
 }));
 
 
