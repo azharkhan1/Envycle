@@ -25,7 +25,8 @@ var { userModel, orderPlaced, restaurantModel, materialModel } = require("./dere
 var app = express();
 var server = http.createServer(app);
 var io = socketIo(server, {
-    cors: ["http://localhost:3000", 'https://envycle.herokuapp.com']
+    cors: ["http://localhost:3000", 'https://envycle.herokuapp.com'],
+    exposedHeaders: ["set-cookie"]
 });
 app.use(morgan("dev"));
 app.use(bodyParser.json());
@@ -67,7 +68,9 @@ app.use(function (req, res, next) {
                 }, SERVER_SECRET)
                 res.cookie('jToken', token, {
                     maxAge: 86_400_000,
-                    httpOnly: true
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: 'none',
                 });
                 req.body.jToken = decodedData;
                 req.headers.jToken = decodedData;
