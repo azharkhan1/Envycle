@@ -26,11 +26,8 @@ var app = express();
 var server = http.createServer(app);
 var io = socketIo(server, {
     cors: ["http://localhost:3000", 'https://envycle.herokuapp.com'],
-<<<<<<< HEAD
     exposedHeaders: ["set-cookie"]
-=======
 
->>>>>>> d6ba048cab0588cde17e8e5be9a0be0139f001ab
 });
 app.use(morgan("dev"));
 app.use(bodyParser.json());
